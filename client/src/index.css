@@ -1,0 +1,446 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+
+/* modern css reset  */
+
+/*
+  1. Use a more-intuitive box-sizing model.
+*/
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+/*
+  2. Remove default margin
+*/
+* {
+  margin: 0;
+  padding: 0;
+}
+/*
+  3. Allow percentage-based heights in the application
+*/
+html, body {
+  height: 100%;
+}
+/*
+  Typographic tweaks!
+  4. Add accessible line-height
+  5. Improve text rendering
+*/
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+/*
+  6. Improve media defaults
+*/
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+/*
+  7. Remove built-in form typography styles
+*/
+input, button, textarea, select {
+  font: inherit;
+}
+/*
+  8. Avoid text overflows
+*/
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+/*
+  9. Create a root stacking context
+*/
+#root, #__next {
+  isolation: isolate;
+}
+
+
+/* RegisterPage */
+
+.register {
+  display: grid;
+  grid-template-columns: 47% auto;
+  height: 100vh;
+}
+
+.image-content {
+  display: flex;
+  align-items: center;
+  padding-bottom: 5rem;
+}
+
+.container {
+  padding-top: 2.4rem;
+}
+
+.register .icon {
+  height: 2rem;
+  text-align: center;
+  margin-bottom: .5rem;
+}
+
+.register .auth-title  {
+  text-align: center;
+  font-weight: 700;
+  font-size: 3rem;
+}
+
+.register .subtitle {
+  font-weight:500;
+  font-size: 1.3rem;
+  text-align: center;
+  width: 70%;
+  margin: auto;
+  margin-bottom: 2rem;
+}
+
+.form {
+  width: 60%;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 900px) {
+  .register {
+    grid-template-columns: 100%;
+  }
+  .image-content {
+    display: none;
+  }
+  .container {
+    width: 100vw;
+    margin: auto;
+  }
+}
+
+@media (max-width: 440px) {
+  .form {
+    width: 85%;
+  }
+}
+
+/* LoginPage */
+.login-page {
+  height: 100vh;
+  align-items: center;
+  padding-bottom: 3.5rem;
+}
+
+.login {
+  width: 364px;
+}
+
+.login .auth-title {
+  font-size: 2.5rem;
+}
+
+.forgot-password {
+  color: hsl(246, 25%, 77%);
+  font-size: .9rem;
+  font-weight: 600;
+}
+
+.Button {
+  color: red;
+}
+
+@media (max-width: 400px) {
+  .login {
+    width: 86%;
+    padding-bottom: 4rem;
+  }  
+}
+
+
+/* Home */
+.header, .hero {
+  background-color: rgb(255,192,23);
+  border-bottom: 1px solid black;
+}
+
+.home > * {
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
+/* Header */
+.header {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+.logo {
+  padding-top: 8px;
+}
+
+.name {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.btn {
+  color: white;
+  background-color: black;
+  border-radius: 25px;
+  padding: .4rem 1.1rem;
+  padding-bottom: .5rem;
+  font-size: .9rem;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding-left:4%;
+    padding-right:4%;
+  }
+  .logo-title {
+    gap: 8px;
+  }
+  .logo {
+    font-size: .85rem;
+    padding-top: 4px;
+  }
+  .name {
+    font-size: 1.5rem;
+  }
+  .navbar {
+    justify-content: flex-end;
+  }
+  .nav-item {
+    display: none;
+  }
+  .btn-action {
+    font-size: .8rem;
+  }
+}
+
+
+/* Hero */
+.hero {
+  height: 70vh;
+  padding-bottom: 1.8rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.title {
+  font-size: 6rem;
+  width: 60%;
+  line-height: 1.7ch;
+  /* padding-top: -10px; */
+}
+
+.subtitle {
+  width: 40%;
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 1.8ch;
+  margin-bottom: 1rem;
+}
+
+.btn-explore {
+  font-size: 1.2rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
+
+.image {
+  z-index: 10;
+  background-image: url(./images/mmm1.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: absolute;
+  top: 80.8px;
+  right: 0;
+  width: 40%;
+  height: 68vh;
+}
+
+@media (max-width: 900px) {
+  .image {
+    display: none;
+  }
+  .hero {
+    padding-left: 4%;
+    padding-right: 4%;
+    padding-bottom: 0;
+    gap: 1rem;
+  }
+  .hero > * {
+    width: 100%;
+  }
+  .title {
+    font-size: 4rem;
+    line-height: 1.8ch;
+  }
+  .subtitle {
+    font-size: 1.2rem;
+    font-weight: 400;
+  }
+  .btn-explore {
+    font-size: .8rem;
+  }
+}
+
+/* Main  */
+main {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 6rem;
+  /* height: 2000px; */
+}
+
+.post-summery, .sidebar {
+  padding-top: 5rem;
+}
+
+.sidebar {
+  height: fit-content;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid rgb(230,230,230);
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: start;
+  gap: .6rem;
+}
+
+.tag {
+  display: inline;
+  text-align: center;
+  padding: .6rem 1rem;
+  background-color: #eee;
+  border-radius: 25px;
+}
+
+/* Post summery */
+.post-summery {
+  display: flex;
+  gap: 1.4rem;
+  align-items: center;
+}
+.summery-author {
+  display: flex;
+  gap: .8rem;
+  align-items: center;
+}
+.author-image {
+  width:1.5rem;
+  border-radius: 50%;
+}
+.author-image img {
+  border-radius: 30%;
+}
+.author-name {
+  font-size: .9rem;
+  font-weight: 600;
+}
+.summery-content {
+  display: flex;
+  gap: .62rem;
+  flex-direction: column;
+}
+.summery-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1.8ch;
+}
+.summery-line {
+  padding-top: 5px;
+  line-height: 2ch;
+  font-weight: 500;
+  color: gray;
+}
+.post-details {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.post-date {
+  font-size: .8rem;
+  color: grey;
+}
+.post-details .tag {
+  font-size: .8rem;
+  padding: .2rem .4rem;
+}
+.summery-image {
+  align-self: center;
+  width: 50%;
+  height: 70%;
+}
+
+/* Post summery  */
+@media (max-width: 900px) {
+  main {
+    grid-template-columns: 100%;
+    gap: 0px;
+  }
+  .sidebar {
+    grid-row-start: 0;
+    grid-row-end: 1;
+    position: static;
+  }
+  .posts {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .post-summery {
+    gap: .7rem;
+    padding: 0;
+  }
+  .summery-content {
+    gap: .5rem;
+  }
+  .author-name {
+    font-size: .7rem;
+  }
+  .author-image {
+    display: none;
+  }
+  .summery-title {
+    font-size: 1rem;
+  }
+  .summery-line {
+    display: none;
+  }
+  .summery-image {
+    width: 100%;
+    align-self: center;
+  }
+}
+
+
+
