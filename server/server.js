@@ -31,7 +31,7 @@ mongoose.connect(process.env.DATABASE_URL,
         useNewUrlParser: true, useUnifiedTopology: true
     }
 )
-    .then(() => console.log('db connection successfull'))
+    .then(() => console.log('Database connection successfull'))
     .catch((err) => console.log('error in db connection', err));
 
 

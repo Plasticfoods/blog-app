@@ -9,7 +9,7 @@ const articleSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    author: {
+    authorId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true
     },

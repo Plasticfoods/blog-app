@@ -67,11 +67,12 @@ async function login(req, res) {
         res.cookie("access_token", newToken.token, {
             httpOnly: true
         })
+        res.cookie('uid', user._id, {httpOnly: false})
         res.status(200).json({ msg: 'logged in', token: newToken.token })
     }
     catch (err) {
         console.log(err.message)
-        res.status(500).send()
+        res.status(500).json({msg: 'Server Error'})
     }
 }
 

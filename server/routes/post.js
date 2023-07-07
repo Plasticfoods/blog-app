@@ -2,8 +2,10 @@ const express = require("express");
 const router = express.Router();
 const Article = require("../models/Article");
 const cloudinary = require("cloudinary").v2;
+const User = require("../models/User");
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' }); // Destination folder for uploaded files
+const verifyToken = require('../middlewares/verifyToken')
 
 
 // get all blog posts
@@ -21,23 +23,35 @@ router.get("/", async (req, res) => {
 router.post("/", upload.single('image'), async (req, res) => {
     try {
         const result = await uploadImage(req.file.path)
-        if(result.secure_url === undefined) {
-            res.status(400).json({msg: result.message})
+        if (result.secure_url === undefined) {
+            res.status(400).json({ msg: result.message })
             return
         }
-        
+
+        // getting user doc to get user id for new article document
+        const userDoc = await User.findOne({ username: req.body.username })
+
+        // added new blog post
         const newPost = new Article({
             ...req.body,
+            authorId: userDoc._id,
             imageUrl: result.secure_url,
-            author: '6452a96044851b2c5d6a8b87'
         })
         await newPost.save()
+
+        // Find a user by their id and add an blogid to blogs array
+        const updatedUser = await User.findOneAndUpdate(
+            { _id: userDoc._id },
+            { $push: { blogs: newPost._id } },
+            { new: true }
+        ).exec();
+
         console.log('Post uploaded')
         res.status(200).json({ msg: 'Post uploaded' })
     }
     catch (err) {
         console.log(err)
-        res.status(500).json({msg: 'Server Error'})
+        res.status(500).json({ msg: 'Server Error' })
     }
 });
 
@@ -47,10 +61,14 @@ router.get("/:postId", async (req, res) => {
     const postId = req.params.postId
     try {
         const post = await Article.findById(postId)
-        res.status(200).json({})
+        if (!post) {
+            return res.status(400).json({ msg: 'Article not found' })
+        }
+        res.status(200).json(post)
     }
     catch (err) {
         console.log(err)
+        res.status(500).json({ msg: 'Server Error' })
     }
 });
 
@@ -60,7 +78,31 @@ router.patch("/:postId");
 
 
 // delete a post
-router.delete("/:postId");
+router.delete("/:postId", verifyToken, async (req, res) => {
+    if (!req.token) return res.status(401).json({ msg: 'Unauthorized' })
+
+    try {
+        // get the user document and update blog id array
+        const userDoc = await User.findById(req.userId)
+        const blogIds = userDoc.blogs
+        for (let i = 0; i < blogIds.length; i++) {
+            if (blogIds[i] === req.params.postId) blogIds.splice(i, 1)
+        }
+        await User.updateOne(
+            { _id: userDoc._id }, // Query to find the document by its _id
+            { $set: { blogs: blogIds } } // New array to replace the existing array
+        );
+    
+        // deleting a blog from Article 
+        const deletedPost = await Article.deleteOne({ _id: req.params.postId })
+        console.log(deletedPost)
+        res.status(200).json({ msg: 'Article deleted' })
+    }
+    catch(err) {
+        console.log(err)
+        res.status(500).json({msg: 'Server Error'})
+    }
+});
 
 
 // upload image to Cloudinary
@@ -75,7 +117,7 @@ const uploadImage = async (imagePath) => {
         // Upload the image
         const result = await cloudinary.uploader.upload(imagePath, options);
         return result
-    } 
+    }
     catch (error) {
         console.error(error);
         return error

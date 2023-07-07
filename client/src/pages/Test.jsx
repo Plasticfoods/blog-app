@@ -8,10 +8,9 @@ export default function Test() {
 
         const formData = new FormData()
         formData.append('image', file)
-        formData.append('title', 'title1')
-        formData.append('content', 'content1')
-        formData.append('author', 'author1')
-
+        formData.append('title', 'My Title threeI have a mongoose collection. ')
+        formData.append('content', 'To replace an existing array field with a new array in a Mongoose collection, you can use the $set operator in a MongoDB update operation.')
+        formData.append('username', 'r8')
 
         try {
             const response = await fetch('http://localhost:7000/posts/', {

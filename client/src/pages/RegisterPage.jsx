@@ -27,7 +27,7 @@ export default function RegisterPage() {
 
     async function register(event) {
         event.preventDefault()
-        const response  = await fetch('http://localhost:7000/auth/register', {
+        const response = await fetch('http://localhost:7000/auth/register', {
             method: 'POST',
             body: JSON.stringify(userDetails),
             headers: {
@@ -36,6 +36,7 @@ export default function RegisterPage() {
         })
         const resObject = await response.json();
         alert(resObject.msg)
+        
     }
 
 
