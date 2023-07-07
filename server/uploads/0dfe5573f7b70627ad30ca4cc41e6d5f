@@ -1,0 +1,43 @@
+import java.util.ArrayList;
+
+class Main {
+
+    public boolean checkNumber(int n, int k) {
+        if(k > n || k == 0) return false;
+        if(k == 1) return true;
+
+        ArrayList<Integer> primes = new ArrayList<>();
+        for(int num=2 ; num<n ; num++) {
+            if(isPrime(num)) primes.add(num);
+        }
+
+        return helper(n, k, primes, 0);
+    }
+
+    private boolean helper(int n, int k, ArrayList<Integer> primes, int index) {
+        if(n == 0 || k == 0) return true;
+        if(n < 0) return false;
+        if(index == primes.size()) return false;
+        if(k == 0) return false;
+
+        for(int i=index ; i<primes.size()  ; i++) {
+            int num = primes.get(i);
+            boolean res = helper(n-num, k-1, primes, index);
+            if(res) return true;
+        }
+        return false;
+    }
+
+    private boolean isPrime(int n) {
+        for(int i=2 ; i<=n/2 ; i++) {
+            if(n%i == 0) return false;
+        }
+        return true;
+    }
+
+    public static void main(String[] args) {
+        int n=7, k=6;
+        Main obj = new Main();
+        System.out.println(obj.checkNumber(n, k));
+    }
+}

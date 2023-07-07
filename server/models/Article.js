@@ -13,7 +13,7 @@ const articleSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true
     },
-    imageLink: {
+    imageUrl: {
         type: String
     },
     uploadDate: {
