@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useParams, useNavigate } from 'react-router-dom'
+import Header2 from '../components/Header2'
 
 export default function Profile() {
     const {username} = useParams()
@@ -24,6 +25,7 @@ export default function Profile() {
 
     return (
         <div className="profile">
+            <Header2 />
             profile page
             <br />
             <p>Name: {username}</p>
