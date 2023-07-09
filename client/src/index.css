@@ -342,7 +342,7 @@ main {
   /* height: 2000px; */
 }
 
-.post-summery,
+.short-post,
 .sidebar {
   padding-top: 5rem;
 }
@@ -371,11 +371,12 @@ main {
   border-radius: 25px;
 }
 
-/* Post summery */
-.post-summery {
+/* Short Post */
+.short-post {
   display: flex;
   gap: 1.4rem;
   align-items: center;
+  border-bottom: 1px solid black;
 }
 .summery-author {
   display: flex;
@@ -428,7 +429,7 @@ main {
   height: 70%;
 }
 
-/* Post summery  */
+/* Short Post  */
 @media (max-width: 900px) {
   main {
     grid-template-columns: 100%;
@@ -444,7 +445,7 @@ main {
     flex-direction: column;
     gap: 2rem;
   }
-  .post-summery {
+  .short-post {
     gap: 0.7rem;
     padding: 0;
   }

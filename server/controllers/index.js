@@ -26,6 +26,7 @@ async function getProfile(req, res) {
 // get users all posts
 async function getUserPosts(req, res) {
     const username = req.params.username
+    console.log(username)
     try {
         const userDoc = await User.findOne({username})
         const blogIds = userDoc.blogs

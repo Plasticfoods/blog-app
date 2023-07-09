@@ -19,6 +19,10 @@ const articleSchema = new mongoose.Schema({
     uploadDate: {
         type: Date,
         default: Date.now
+    },
+    Category: {
+        type: String,
+        default: 'Sports'
     }
 })
 

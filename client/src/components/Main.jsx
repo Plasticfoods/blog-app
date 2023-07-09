@@ -1,10 +1,11 @@
 import Tag from "./Tag"
 import Posts from "./Posts"
+const posts = []
 
 export default function Main() {
     return (
         <main>
-            <Posts />
+            <Posts blogs={posts} />
             <div className="sidebar tags">
                 <p className="tags-title font-bold mb-5">Discover more of what matters to you</p>
                 <div className="tags">
