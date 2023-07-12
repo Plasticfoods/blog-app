@@ -336,6 +336,10 @@ h6 {
 
 /* Main  */
 
+.link {
+  display: block;
+}
+
 /* mobile styling  */
 main {
   padding-left: 7% !important;
@@ -345,7 +349,7 @@ main {
 .home-aside {
   padding-top: 2rem;
   padding-bottom: 2rem;
-  border-bottom: 2px solid #eee;
+  border-bottom: 1px solid rgb(230,230,230);
 }
 
 .home-aside-title {
@@ -372,6 +376,57 @@ main {
   font-weight: 500;
 }
 
+.short-blogs {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  display: grid;
+  gap: 2rem;
+}
+
+.short-blog {
+  display: grid;
+  grid-template-columns: 1.8fr 1fr;
+  gap: 1rem;
+}
+
+.short-blog-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 700px) {
+  .short-blog-content {
+    display: none;
+  }
+}
+
+.short-blog-left {
+  display: flex;
+  flex-direction: column;
+  gap: .2rem;
+}
+
+.short-blog-author-name {
+  font-size: .9rem;
+  font-weight: 600;
+}
+
+.short-blog-title {
+  font-weight: 700;
+  line-height: 2ch;
+  padding-bottom: 5px;
+}
+
+.short-blog-details {
+  display: flex;
+  gap: .5rem;
+}
+
+.short-blog-details > * {
+  color: rgb(117,139,188);
+  font-weight: 500;
+}
 
 /* Profile Page  */
 
