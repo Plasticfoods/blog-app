@@ -89,6 +89,10 @@ h6 {
   isolation: isolate;
 }
 
+:root {
+  desktop-padding: 10%;
+}
+
 
 .desktop-padding {
   padding-left: 10%;
@@ -203,13 +207,15 @@ h6 {
   border-bottom: 1px solid black;
 }
 
-.home > * {
+/* .home > * {
   padding-left: 10%;
   padding-right: 10%;
-}
+} */
 
-/* Header */
+/* Header  desktop */
 .header {
+  padding-left: 10%;
+  padding-right: 10%;
   padding-top: 1rem;
   padding-bottom: 1rem;
   align-items: center;
@@ -263,8 +269,10 @@ h6 {
   }
 }
 
-/* Hero */
+/* Hero desktop */
 .hero {
+  padding-left: 10%;
+  padding-right: 10%;
   height: 70vh;
   padding-bottom: 1.8rem;
 
@@ -342,8 +350,8 @@ h6 {
 
 /* mobile styling  */
 main {
-  padding-left: 7% !important;
-  padding-right: 7% !important;
+  padding-left: 7% ;
+  padding-right: 7%;
 }
 
 .home-aside {
@@ -373,12 +381,14 @@ main {
   display: block;
   background-color: #eee;
   border-radius: 20px;
-  font-weight: 500;
+  font-weight: 400;
+  font-size: 1rem;
+  color:black;
 }
 
 .short-blogs {
   padding-top: 2rem;
-  padding-bottom: 2rem;
+  padding-bottom: 3rem;
   display: grid;
   gap: 2rem;
 }
@@ -389,13 +399,18 @@ main {
   gap: 1rem;
 }
 
+.short-blog-right {
+  display: grid;
+  place-items:center; 
+}
+
 .short-blog-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 800px) {
   .short-blog-content {
     display: none;
   }
@@ -415,7 +430,12 @@ main {
 .short-blog-title {
   font-weight: 700;
   line-height: 2ch;
-  padding-bottom: 5px;
+}
+
+@media (max-width: 800px) {
+  .short-blog-title {
+    padding-bottom: 5px;
+  }
 }
 
 .short-blog-details {
@@ -424,9 +444,52 @@ main {
 }
 
 .short-blog-details > * {
-  color: rgb(117,139,188);
-  font-weight: 500;
+  color: #6B6B6B;
+  font-size: smaller;
 }
+
+/* Main desktop Styling  */ 
+
+@media (min-width: 900px) {
+  main {
+    padding-left: 10%;
+    padding-right: 8%;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 7rem;
+  }
+
+  .home-aside {
+    align-self: flex-start;
+  }
+
+  .short-blogs {
+    gap: 4rem;
+  }
+
+  .short-blog {
+    grid-template-columns: 2.5fr 1fr;
+    gap: 3.5rem;
+  }
+
+  .short-blog-title {
+    font-size: 1.5rem;
+  }
+
+  .short-blog-content {
+    color: #6B6B6B;
+    font-weight: 500;
+  }
+
+  .short-blog-image {
+    width: 90%;
+    height: auto;
+  }
+}
+
 
 /* Profile Page  */
 

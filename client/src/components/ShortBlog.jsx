@@ -9,7 +9,7 @@ export default function ShortBlog(props) {
         <div className="short-blog-left">
             <Link className="short-blog-author-name link" to={`${base}r8`}>@r8</Link>
             <h3 className="short-blog-title">Diary of an Interstellar Voyage, Report 35</h3>
-            <p className="short-blog-content">These aren’t travel tips, but ways of thinking about taking time off or going on vacation that can help level up your approach.</p>
+            <p className="short-blog-content">These aren’t travel tips, but ways of thinking about taking time off or going on vacation that can help level up your approach...</p>
             <div className="short-blog-details">
                 <p className="date">Jul 8</p>
                 <div>.</div>

@@ -2,7 +2,11 @@ import Tag from "./Tag"
 import ShortBlog from "./ShortBlog"
 const blogs = [{imageLink: 'https://miro.medium.com/v2/resize:fit:828/format:webp/1*jyZQjnQAlcoeNCQ8oBkujA.jpeg'}, 
     {imageLink: 'https://miro.medium.com/v2/resize:fill:250:168/1*aqmtMRh9xnVwp6-5EEJ4KQ.png'}, 
-    {imageLink: 'https://miro.medium.com/v2/resize:fill:250:168/0*jxVHjlRyDYVgFuyE'}]
+    {imageLink: 'https://miro.medium.com/v2/resize:fill:250:168/0*jxVHjlRyDYVgFuyE'},
+    {imageLink: 'https://miro.medium.com/v2/resize:fill:250:168/1*aqmtMRh9xnVwp6-5EEJ4KQ.png'},
+    {imageLink: 'https://miro.medium.com/v2/resize:fill:250:168/1*aqmtMRh9xnVwp6-5EEJ4KQ.png'},
+    {imageLink: 'https://miro.medium.com/v2/resize:fill:250:168/1*aqmtMRh9xnVwp6-5EEJ4KQ.png'},
+    {imageLink: 'https://miro.medium.com/v2/resize:fill:250:168/1*aqmtMRh9xnVwp6-5EEJ4KQ.png'}]
 
 export default function Main() {
     return (
