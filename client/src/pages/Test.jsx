@@ -4,8 +4,6 @@ export default function Test() {
     const [file, setFile] = useState(null)
 
     async function handleCLick() {
-        if(!file) return;
-
         const formData = new FormData()
         formData.append('image', file)
         formData.append('title', 'My Title threeI have a mongoose collection. ')

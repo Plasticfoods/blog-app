@@ -22,10 +22,16 @@ router.get("/", async (req, res) => {
 // upload a blog post
 router.post("/", upload.single('image'), async (req, res) => {
     try {
-        const result = await uploadImage(req.file.path)
-        if (result.secure_url === undefined) {
-            res.status(400).json({ msg: result.message })
-            return
+        let imageUrl = null
+
+        // checking if user has uploaded an image
+        if(req.file) {
+            const result = await uploadImage(req.file.path)
+            if (result.secure_url === undefined) {
+                res.status(400).json({ msg: result.message })
+                return
+            }
+            imageUrl = result.secure_url
         }
 
         // getting user doc to get user id for new article document
@@ -34,8 +40,10 @@ router.post("/", upload.single('image'), async (req, res) => {
         // added new blog post
         const newPost = new Article({
             ...req.body,
-            authorId: userDoc._id,
-            imageUrl: result.secure_url,
+            userId: userDoc._id,
+            username: userDoc.username,
+            name: userDoc.name,
+            imageUrl: imageUrl
         })
         await newPost.save()
 
@@ -82,7 +90,7 @@ router.delete("/:postId", verifyToken, async (req, res) => {
     if (!req.token) return res.status(401).json({ msg: 'Unauthorized' })
 
     try {
-        // get the user document and update blog id array
+        // get the user document and update blogs array
         const userDoc = await User.findById(req.userId)
         const blogIds = userDoc.blogs
         for (let i = 0; i < blogIds.length; i++) {
