@@ -339,7 +339,7 @@ main {
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 6rem;
-  /* height: 2000px; */
+  height: 2000px;
 }
 
 .short-post,
