@@ -33,6 +33,8 @@ router.post("/", upload.single('image'), async (req, res) => {
             }
             imageUrl = result.secure_url
         }
+        
+        req.body.title = req.body.title.trim().replace(/\s+/g, ' ')
 
         // getting user doc to get user id for new article document
         const userDoc = await User.findOne({ username: req.body.username })

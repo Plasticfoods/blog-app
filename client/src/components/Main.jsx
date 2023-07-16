@@ -1,12 +1,5 @@
 import Tag from "./Tag"
-import ShortBlog from "./ShortBlog"
-const blogs = [{imageLink: 'https://miro.medium.com/v2/resize:fit:828/format:webp/1*jyZQjnQAlcoeNCQ8oBkujA.jpeg'}, 
-    {imageLink: 'https://miro.medium.com/v2/resize:fill:250:168/1*aqmtMRh9xnVwp6-5EEJ4KQ.png'}, 
-    {imageLink: 'https://miro.medium.com/v2/resize:fill:250:168/0*jxVHjlRyDYVgFuyE'},
-    {imageLink: 'https://miro.medium.com/v2/resize:fill:250:168/1*aqmtMRh9xnVwp6-5EEJ4KQ.png'},
-    {imageLink: 'https://miro.medium.com/v2/resize:fill:250:168/1*aqmtMRh9xnVwp6-5EEJ4KQ.png'},
-    {imageLink: 'https://miro.medium.com/v2/resize:fill:250:168/1*aqmtMRh9xnVwp6-5EEJ4KQ.png'},
-    {imageLink: 'https://miro.medium.com/v2/resize:fill:250:168/1*aqmtMRh9xnVwp6-5EEJ4KQ.png'}]
+import ShortBlogs from "./ShortBlogs"
 
 export default function Main() {
     return (
@@ -26,16 +19,7 @@ export default function Main() {
                 </div>
             </aside>
 
-            <section className="short-blogs">
-                {
-                    blogs.map((element, index) => {
-                        return <ShortBlog imageLink={element.imageLink} key={index} id={index} />
-                    })
-                }
-                {/* <ShortBlog imageLink={'https://miro.medium.com/v2/resize:fit:828/format:webp/1*jyZQjnQAlcoeNCQ8oBkujA.jpeg'} />
-                <ShortBlog imageLink={'https://miro.medium.com/v2/resize:fill:250:168/1*aqmtMRh9xnVwp6-5EEJ4KQ.png'} />
-                <ShortBlog imageLink={'https://miro.medium.com/v2/resize:fill:250:168/0*jxVHjlRyDYVgFuyE'} /> */}
-            </section>
+            <ShortBlogs />
 
         </main>
     )

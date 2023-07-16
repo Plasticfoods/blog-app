@@ -453,26 +453,31 @@ main {
 @media (min-width: 900px) {
   main {
     padding-left: 10%;
-    padding-right: 8%;
+    padding-right: 7%;
     padding-top: 4rem;
     padding-bottom: 4rem;
 
-    display: flex;
-    flex-direction: row-reverse;
-    gap: 7rem;
+    display: grid;
+    grid-template-columns: 2.2fr 1fr;
+    gap: 6rem;
   }
 
   .home-aside {
     align-self: flex-start;
+    grid-column: 2/3;
+    position: sticky;
+    top: 0;
   }
 
   .short-blogs {
     gap: 4rem;
+    grid-column: 1/2;
+    grid-row-start: 1;
   }
 
   .short-blog {
     grid-template-columns: 2.5fr 1fr;
-    gap: 3.5rem;
+    gap: 1rem;
   }
 
   .short-blog-title {
@@ -486,7 +491,13 @@ main {
 
   .short-blog-image {
     width: 90%;
-    height: auto;
+    height: 90%;
+  }
+
+  .loading {
+    position: absolute;
+    top: 90%;
+    left: 30%;
   }
 }
 
