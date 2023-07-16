@@ -466,7 +466,7 @@ main {
     align-self: flex-start;
     grid-column: 2/3;
     position: sticky;
-    top: 0;
+    top: 5rem;
   }
 
   .short-blogs {
@@ -500,6 +500,40 @@ main {
     left: 30%;
   }
 }
+
+
+/* Footer  */
+/* mobile styling  */
+footer {
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+
+  border-top: 1px solid black;
+}
+
+.footer-links {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 800px) {
+  .hide {
+    display: none;
+  }
+}
+
+/* desktop styling */
+@media (min-width: 800px) {
+  footer {
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-bottom: 2rem;
+  }
+}
+
 
 
 /* Profile Page  */
