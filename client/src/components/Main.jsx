@@ -1,21 +1,26 @@
 import Tag from "./Tag"
-import Posts from "./Posts"
-const posts = []
+import ShortBlogs from "./ShortBlogs"
 
 export default function Main() {
     return (
         <main>
-            <Posts blogs={posts} />
-            <div className="sidebar tags">
-                <p className="tags-title font-bold mb-5">Discover more of what matters to you</p>
+            <aside className="home-aside">
+                <h3 className="home-aside-title">Discover more of what matters to you</h3>
                 <div className="tags">
-                    <Tag tagName="Programming"/>
-                    <Tag tagName="Data science"/>
-                    <Tag tagName="Writing"/>
-                    <Tag tagName="Python"/>
-                    <Tag tagName="Machine learning"/>
+                    <Tag tagName='Programming' />
+                    <Tag tagName='JavaScript' />
+                    <Tag tagName='Data Science ' />
+                    <Tag tagName='Tarvel' />
+                    <Tag tagName='Writing' />
+                    <Tag tagName='Productivity' />
+                    <Tag tagName='Self Improvement' />
+                    <Tag tagName='Machine Learning' />
+                    <Tag tagName='Life' />
                 </div>
-            </div>
-        </main>    
+            </aside>
+
+            <ShortBlogs />
+
+        </main>
     )
 }

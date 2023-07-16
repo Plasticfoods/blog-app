@@ -9,9 +9,15 @@ const articleSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    authorId: {
+    userId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true
+    },
+    username: {
+        type: String
+    },
+    name: {
+        type: String        
     },
     imageUrl: {
         type: String
@@ -20,7 +26,7 @@ const articleSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    Category: {
+    category: {
         type: String,
         default: 'Sports'
     }

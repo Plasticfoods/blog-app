@@ -1,9 +1,9 @@
-import { Link } from "react-router-dom"
+import {Link } from 'react-router-dom'
 
 export default function Tag(props) {
     return (
-            <div className="tag">
+            <Link className="tag">
                 {props.tagName}
-            </div>    
+            </Link>    
     )
 }

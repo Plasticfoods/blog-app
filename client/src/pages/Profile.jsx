@@ -1,8 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import Header2 from '../components/Header2'
-import Posts from '../components/Posts'
-import ShortPost from '../components/ShortPost'
 const base = 'http://localhost:7000/'
 
 
@@ -58,15 +56,7 @@ export default function Profile() {
         <div className="profile">
             <Header2 />
             <main>
-                <section className="user-blogs">
-                    <h1 className="user-name"></h1>
-                    {(blogs.length > 0 && userInfo !== null) ? (
-                        <Posts blogs={blogs} authorName='abc' />
-                    ) : (
-                        <p>Loading posts...</p>
-                    )}
-                </section>
-                <section className="user-details"></section>
+                
             </main>
             <button onClick={logout} type='button'>Logout</button>
         </div>

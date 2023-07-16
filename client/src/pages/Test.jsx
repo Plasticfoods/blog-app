@@ -2,15 +2,15 @@ import { useState } from "react"
 
 export default function Test() {
     const [file, setFile] = useState(null)
+    const [title, setTitle] = useState("")
+    const [content, setContent] = useState("")
 
     async function handleCLick() {
-        if(!file) return;
-
         const formData = new FormData()
         formData.append('image', file)
-        formData.append('title', 'My Title threeI have a mongoose collection. ')
-        formData.append('content', 'To replace an existing array field with a new array in a Mongoose collection, you can use the $set operator in a MongoDB update operation.')
-        formData.append('username', 'r8')
+        formData.append('title', title)
+        formData.append('content', content)
+        formData.append('username', 'john12')
 
         try {
             const response = await fetch('http://localhost:7000/posts/', {
@@ -31,6 +31,10 @@ export default function Test() {
     return <div className="test">
         <h1>Test Page</h1>
         <form>
+            Title: <input type="text" style={{border: '1px solid black', width: '100%', height: '50px'}} onChange={(e) => {setTitle(e.target.value)}} />
+            <br />
+            Content: <input type="text-area" style={{border: '1px solid black', width: '100%', height: '70px'}} onChange={(e) => {setContent(e.target.value)}} />
+            <br />
             <input type="file" onChange={(e) => { setFile(e.target.files[0]) }}/>
             <br />
             <button onClick={handleCLick} type='button'>upload</button>
