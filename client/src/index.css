@@ -539,10 +539,12 @@ footer {
 /* Profile Page  */
 
 /* Header2  */
-
+/* mobile styling  */
 .header2 {
   padding-top: 1rem;
   padding-bottom: 1rem;
+  padding-left: 4%;
+  padding-right: 4%;
 
   display: flex;
   justify-content: space-between;
@@ -558,11 +560,18 @@ footer {
   padding-top: 2px;
 }
 
-.notification-icon {
-  padding-top: 3px;
-  font-size: 1.4rem;
+.write-icon {
+  font-size: 1.3rem;
 }
 
+.btn-sign-up {
+  background-color: rgb(26,137,23);
+  color: white;
+  padding: .3rem 1rem;
+  border-radius: 20px;
+}
+
+/* desktop styling  */
 @media (min-width: 768px) {
   .header2 .name {
     display: block !important;
@@ -576,11 +585,57 @@ footer {
   }
 
   .profile-icon {
-    padding-top: 8px;
+    padding-top: 5px;
   }
+}
 
-  .notification-icon {
+/* user details  */
+/* desktop styling  */
+.user-details {
+  width: 70%;
+  margin: 0 auto;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+}
+
+.user-name {
+  font-size: 3rem;
+  font-weight: 600;
+}
+
+.user-image {
+  width: 8rem;
+}
+
+.user-about {
+  font-size: 1.3rem;
+  font-weight: 500;
+  transform: translateY(-15px);
+  color: #6B6B6B;
+}
+
+@media (max-width: 800px) {
+  .user-details {
+    width: 100%;
+    padding-left: 4%;
+    padding-right: 4%;
+    padding-top: .5rem;
+    padding-bottom: .2rem;
+  }
+  .user-name {
     font-size: 1.5rem;
-    padding-top: 7px;
+    font-weight: 600;
+  }
+  .user-image {
+    width: 3rem;
+    display: flex;
+    align-items: start;
+    padding-top: 5px;
+  }
+  .user-about {
+    font-size: 1rem;
   }
 }

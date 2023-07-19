@@ -1,6 +1,8 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import Header2 from '../components/Header2'
+import UserDetails from '../components/UserDetails'
+import Footer from '../components/Footer'
 const base = 'http://localhost:7000/'
 
 
@@ -54,11 +56,12 @@ export default function Profile() {
 
     return (
         <div className="profile">
-            <Header2 />
+            <Header2 logout={logout} />
+            <UserDetails />
             <main>
                 
             </main>
-            <button onClick={logout} type='button'>Logout</button>
+            <Footer />
         </div>
     )
 }
