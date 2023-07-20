@@ -20,7 +20,7 @@ export default function Header2(props) {
                 </Link>
                 <div className="name">Skeleton</div>
             </div>
-            <div className='nav-icons flex flex-row gap-8 items-center sm:gap-3'>
+            <div className='nav-icons flex flex-row items-center lg:gap-6 gap-4'>
                 {loggedIn ?
                     ( 
                     <>

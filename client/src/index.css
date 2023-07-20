@@ -430,6 +430,7 @@ main {
 .short-blog-title {
   font-weight: 700;
   line-height: 2ch;
+  word-break: break-all;
 }
 
 @media (max-width: 800px) {
@@ -487,6 +488,8 @@ main {
   .short-blog-content {
     color: #6B6B6B;
     font-weight: 500;
+    line-height: 2.2ch;
+    padding-bottom: .5rem;
   }
 
   .short-blog-image {
@@ -545,6 +548,10 @@ footer {
   padding-bottom: 1rem;
   padding-left: 4%;
   padding-right: 4%;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: white;
 
   display: flex;
   justify-content: space-between;
@@ -596,7 +603,6 @@ footer {
   margin: 0 auto;
   padding-top: 2rem;
   padding-bottom: 2rem;
-  border-bottom: 1px solid #eee;
   display: flex;
   justify-content: space-between;
 }
@@ -613,7 +619,6 @@ footer {
 .user-about {
   font-size: 1.3rem;
   font-weight: 500;
-  transform: translateY(-15px);
   color: #6B6B6B;
 }
 
@@ -622,8 +627,8 @@ footer {
     width: 100%;
     padding-left: 4%;
     padding-right: 4%;
-    padding-top: .5rem;
-    padding-bottom: .2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
   }
   .user-name {
     font-size: 1.5rem;
@@ -638,4 +643,61 @@ footer {
   .user-about {
     font-size: 1rem;
   }
+}
+
+/* Profile Blogs  */
+.profile-main {
+  padding-left: 4%;
+  padding-right: 4%;
+}
+
+.profile-blogs {
+  width: 100%;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  display: grid;
+  /* gap: 1.5rem; */
+}
+
+.profile-blog {
+  border-top: 1px solid #eee;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.profile-blog-image {
+  width: 85%;
+  height: auto;
+  margin-left: auto;
+}
+
+.short-blog-tag {
+  color: #6B6B6B;
+}
+
+@media (min-width: 800px) {
+  .profile-main {
+    padding-left: 10%;
+    padding-right: 10%;
+  }
+  .profile-blogs {
+    width: 60%;
+    margin: 0 auto;
+    /* gap: 2rem; */
+  }
+  .profile-blog {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+  .profile-blog-image {
+    width: 80%;
+    height: auto;
+    object-fit: fill;
+  }
+}
+
+.profile-blogs-loading, .no-blogs {
+  padding-top: 4rem;
+  text-align: center;
+  height: 60vh;
 }

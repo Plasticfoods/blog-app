@@ -2,6 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import Header2 from '../components/Header2'
 import UserDetails from '../components/UserDetails'
+import ProfileBlogs from '../components/ProfileBlogs'
 import Footer from '../components/Footer'
 const base = 'http://localhost:7000/'
 
@@ -58,9 +59,9 @@ export default function Profile() {
         <div className="profile">
             <Header2 logout={logout} />
             <UserDetails />
-            <main>
-                
-            </main>
+            <div className='profile-main'>
+                <ProfileBlogs />
+            </div>
             <Footer />
         </div>
     )

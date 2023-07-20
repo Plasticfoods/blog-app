@@ -2,7 +2,7 @@ import profileIcon from '../images/user-profile-icon.svg'
 
 export default function UserDetails() {
     return <section className="user-details">
-        <div className='flex flex-col gap-2 justify-center'>
+        <div className='flex flex-col gap-0 justify-center'>
             <h2 className="user-name">
                 Anthony D. Mays
             </h2>
