@@ -21,18 +21,22 @@ router.get('/', verifyToken, (req, res) => {
 })
 
 
-// get a specific user details
-router.get('/:username', indexController.getProfile)
-
-
-// get a user posts
-router.get('/:username/posts', indexController.getUserPosts)
-
-
 // test route
 router.post('/test', verifyToken, (req, res) => {
     console.log('test route')
     res.send(req.user)
 })
+
+//get my profile
+router.get('/myprofile', verifyToken, indexController.getMyProfile)
+
+// // get a specific user details
+// router.get('u/:username', verifyToken, indexController.getProfile)
+
+
+// // get a user posts
+// router.get('users/:username/posts', indexController.getUserPosts)
+
+
 
 module.exports = router

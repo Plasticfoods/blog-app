@@ -95,8 +95,11 @@ router.delete("/:postId", verifyToken, async (req, res) => {
         // get the user document and update blogs array
         const userDoc = await User.findById(req.userId)
         const blogIds = userDoc.blogs
-        for (let i = 0; i < blogIds.length; i++) {
-            if (blogIds[i] === req.params.postId) blogIds.splice(i, 1)
+        for (let i = 0 ; i<blogIds.length ; i++) {
+            if (blogIds[i] === req.params.postId) {
+                blogIds.splice(i, 1)
+                break
+            }
         }
         await User.updateOne(
             { _id: userDoc._id }, // Query to find the document by its _id
@@ -105,7 +108,7 @@ router.delete("/:postId", verifyToken, async (req, res) => {
     
         // deleting a blog from Article 
         const deletedPost = await Article.deleteOne({ _id: req.params.postId })
-        console.log(deletedPost)
+        console.log('Deleted article: ', deletedPost)
         res.status(200).json({ msg: 'Article deleted' })
     }
     catch(err) {

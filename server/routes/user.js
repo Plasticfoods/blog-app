@@ -1,39 +1,44 @@
+const express = require('express')
+const router = express.Router()
+const verifyToken = require('../middlewares/verifyToken')
 const User = require('../models/User')
 const Article = require('../models/Article')
 
+// test 
+router.get('/test', (req, res) => {
+    res.status(200).json({msg: 'test route'})
+})
 
-// returns the user profile
-async function getProfile(req, res) {
+// get a specific user details
+router.get('/:username', async (req, res) => {
     const {username} = req.params
 
     try {
         console.log('Username = ', username)
-        const user = await User.findOne({username})
+        const userDoc = await User.findOne({username})
         // if user not present
-        if(!user) {
+        if(!userDoc) {
             res.status(404).json({ msg: 'User does not exist' })
             return
         }
 
-        let loggedIn = false
-        if(req.token !== null) loggedIn = true
-        res.status(200).json({loggedIn: loggedIn, userInfo: user})
+        res.status(200).json(userDoc)
     }
     catch(err) {
         console.log(err)
         res.status(500).json({msg: 'Server Error'})
     }
-}
+})
 
 
-// get users all posts
-async function getUserPosts(req, res) {
+// get a user posts
+router.get('/:username/posts', async (req, res) => {
     const username = req.params.username
     console.log(username)
     try {
         const userDoc = await User.findOne({username})
         if(!userDoc) {
-            return res.status(400).json({msg: 'No user found'})
+            return res.status(404).json({msg: 'No user found'})
         }
         const blogIds = userDoc.blogs
 
@@ -49,29 +54,7 @@ async function getUserPosts(req, res) {
         console.log(err)
         res.status(500).json({msg: 'Server Error'})
     }
-}
+})
 
-// returns users own data
-async function getMyProfile(req, res) {
-    console.log('index route')
-    try {   
-        if(!req.token) {
-            return res.status(200).json({
-                loggedIn: false,
-                userData: null
-            })
-        }
 
-        return res.status(200).json({loggedIn: true, userData: req.user})
-    }
-    catch(err) {
-        console.log(err)
-        res.status(500).json({msg: 'Server Error'})
-    }
-}
-
-module.exports = {
-    getProfile,
-    getUserPosts,
-    getMyProfile
-}
+module.exports = router

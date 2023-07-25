@@ -1,44 +1,38 @@
 import { useParams, useNavigate } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, createContext } from 'react'
 import Header2 from '../components/Header2'
 import UserDetails from '../components/UserDetails'
 import ProfileBlogs from '../components/ProfileBlogs'
 import Footer from '../components/Footer'
-const base = 'http://localhost:7000/'
+import { base_url, api_url } from '../helper/variables'
 
+const UserContext = createContext({}) 
 
-export default function Profile() {
+function Profile() {
     const {username} = useParams()
     const navigate = useNavigate()
-    const [blogs, setBlogs] = useState([])
-    const [userInfo, setUserInfo] = useState(null)
-
-    // getting user detail
+    const [userData, setUserData] = useState({})
+    
+    // returns user data if username is not valid it shows 404 page
     useEffect(() => {
-        fetch(`${base}${username}`, {
+        fetch(`${api_url}users/${username}`, {
             method: 'GET',
             withCredentials: true,
             credentials: 'include'
         })
-        .then(res => res.json())
-        .then(json => {
-            setUserInfo(json)
+        .then(res => {
+            if(res.status === 404) {
+                navigate('*')
+                return null
+            }
+            return res.json()
+        })
+        .then(data => {
+            if(data !== null) setUserData(data)
         })
         .catch(err => console.log(err))
-    }, [])
-
-    // getting user blog posts
-    useEffect(() => {
-        fetch(`${base}${username}/posts`, {
-            method: 'GET',
-            withCredentials: true,
-            credentials: 'include'
-        })
-        .then(res => res.json())
-        .then(json => {
-            setBlogs(json.blogs)
-        })
-    }, [])
+    }, [username])
+    
 
     function logout(e) {
         fetch('http://localhost:7000/auth/logout', {
@@ -56,13 +50,18 @@ export default function Profile() {
 
 
     return (
-        <div className="profile">
-            <Header2 logout={logout} />
-            <UserDetails />
-            <div className='profile-main'>
-                <ProfileBlogs />
+        <UserContext.Provider value={userData}>
+            <div className="profile">
+                <Header2 logout={logout} />
+                <UserDetails value={userData} />
+                <div className='profile-main'>
+                    <ProfileBlogs />
+                </div>
+                <Footer />
             </div>
-            <Footer />
-        </div>
+        </UserContext.Provider>
+
     )
 }
+
+export {UserContext, Profile}

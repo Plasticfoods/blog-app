@@ -3,14 +3,37 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBlog, faPenToSquare } from '@fortawesome/free-solid-svg-icons'; // logo, write icon
 import { Link } from 'react-router-dom';
 import { base_url, api_url } from '../helper/variables'
-import { useState } from 'react';
-const createPostUrl = `${base_url}new-story`
-
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function Header2(props) {
-
-    const [loggedIn, setLoggedIn] = useState(false)
+    
+    const navigate = useNavigate()
     const [username, setUsername] = useState('')
+    const [loggedIn, setLoggedIn] = useState(false)
+    const createBlogUrl = `${base_url}new-story`
+    
+    useEffect(() => {
+        fetch(`http://localhost:7000/myprofile`, {
+            method: 'GET',
+            withCredentials: true,
+            credentials: 'include'
+        })
+        .then(res => {
+            if(res.status === 404) {
+                navigate('*')
+                return null
+            }
+            return res.json()
+        })
+        .then(data => {
+            if(data === null) return
+            if(data.userData !== null) setUsername(data.userData.username)
+            setLoggedIn(data.loggedIn)
+        })
+        .catch(err => console.log(err))
+    }, [])
+
 
     return (
         <header className="header2 mobile-padding pt-3">
@@ -20,12 +43,12 @@ export default function Header2(props) {
                 </Link>
                 <div className="name">Skeleton</div>
             </div>
-            <div className='nav-icons flex flex-row items-center lg:gap-6 gap-4'>
+            <div className='nav-icons flex flex-row items-center lg:gap-8 gap-4'>
                 {loggedIn ?
                     ( 
                     <>
                         <button onClick={(e) => props.logout(e)} >logout</button>
-                        <Link className='flex gap-2' to={createPostUrl}>
+                        <Link className='flex gap-2' to={createBlogUrl}>
                             <FontAwesomeIcon icon={faPenToSquare} className='write-icon' />
                             <p>Write</p>
                         </Link>

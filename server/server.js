@@ -10,14 +10,16 @@ const PORT = process.env.PORT || 7000
 const indexRouter = require('./routes/index')
 const authRouter = require('./routes/auth')
 const postRouter = require('./routes/post')
+const userRouter = require('./routes/user')
 
 // app.use(cors())
 app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 app.use(express.json())
 app.use(cookieParser())
+app.use('/', indexRouter)
 app.use('/auth', authRouter)
 app.use('/posts', postRouter)
-app.use('/', indexRouter)
+app.use('/users', userRouter)
 
 
 cloudinary.config({
