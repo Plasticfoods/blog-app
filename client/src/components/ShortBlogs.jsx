@@ -18,7 +18,7 @@ function getBlogUrl(title, blogId) {
     title = title.toLowerCase()
     let path = title.split(' ').join('-')
     path += '-' + blogId
-    return base_url + path
+    return base_url + 'posts/' + path
 }
 
 function extractDate(dateString) {

@@ -3,9 +3,9 @@ import Home from "./pages/Home";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import {Profile} from "./pages/Profile";
-import Post from "./pages/Post";
 import Test from "./pages/Test";
 import Page404 from "./pages/Page404";
+import BlogPost from "./pages/BlogPost";
 
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
       <Route exact path="/auth/login" element={<LoginPage />} />
       <Route exact path="/auth/register" element={<RegisterPage />} />
       <Route path="/:username" element={<Profile />} />
-      <Route path="/posts/:postId" element={<Post />} />
+      <Route path="/posts/:postId" element={<BlogPost />} />
       <Route path="/test" element={<Test />} />
       <Route path="*" element={<Page404 />} />
     </Routes>

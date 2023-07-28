@@ -35,7 +35,7 @@ function Profile() {
     
 
     function logout(e) {
-        fetch('http://localhost:7000/auth/logout', {
+        fetch(`${api_url}auth/logout`, {
             method: 'POST',
             withCredentials: true,
             credentials: 'include'
