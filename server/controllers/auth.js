@@ -7,10 +7,15 @@ async function register(req, res) {
     const { name, username, email, password } = req.body
 
     try {
-        const isEmailPresent = await User.findOne({ email })
-        if (isEmailPresent) {
-            res.status(409).json({ msg: "Email address in use" })
-            return;
+        let userDoc = await User.findOne({email})
+        if(userDoc) {
+            res.status(409).json({ msg: "Email address in use", key: 'email', success: false })
+            return
+        }
+        userDoc = await User.findOne({username})
+        if(userDoc) {
+            res.status(409).json({ msg: "Username already exist", key: 'username', success: false })
+            return
         }
 
         const hashedPassword = await bcrypt.hash(password, 10)
@@ -20,10 +25,10 @@ async function register(req, res) {
             email: email,
             password: hashedPassword,
         });
-        await newUser.save();
+        await newUser.save()
         console.log('registration successfull')
 
-        res.status(200).send({ msg: 'User registration successfull' });
+        res.status(200).send({ msg: 'User registration successfull', success: true })
     }
     catch (err) {
         console.log(err.message)
@@ -48,7 +53,7 @@ async function login(req, res) {
             return
         }
         console.log('logged in')
-        
+
         // generate JWT
         const payload = {
             sub: user._id,
@@ -67,20 +72,20 @@ async function login(req, res) {
         res.cookie("access_token", newToken.token, {
             httpOnly: true
         })
-        res.cookie('uid', user._id, {httpOnly: false})
+        res.cookie('uid', user._id, { httpOnly: false })
         res.status(200).json({ msg: 'logged in', token: newToken.token })
     }
     catch (err) {
         console.log(err.message)
-        res.status(500).json({msg: 'Server Error'})
+        res.status(500).json({ msg: 'Server Error' })
     }
 }
 
 
 async function logout(req, res) {
     try {
-        if(!req.token) {
-            res.status(401).json({msg: 'Token not found'})
+        if (!req.token) {
+            res.status(401).json({ msg: 'Token not found' })
             return
         }
 
@@ -88,17 +93,17 @@ async function logout(req, res) {
         const currToken = req.cookies.access_token
 
         updatedTokens = oldTokens.filter((element) => {
-            if(element.token !== currToken) return true
+            if (element.token !== currToken) return true
         })
 
         const user = req.user
-        await User.findByIdAndUpdate(user._id, {tokens: updatedTokens})
-        
+        await User.findByIdAndUpdate(user._id, { tokens: updatedTokens })
+
         res.clearCookie("access_token")
         console.log('logged out')
         res.status(200).json({ message: "Successfully logged out." });
     }
-    catch(err) {
+    catch (err) {
         console.log(err)
     }
 

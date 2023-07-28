@@ -4,6 +4,7 @@ import { InputAdornment, IconButton, TextField, Button } from '@material-ui/core
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBlog } from '@fortawesome/free-solid-svg-icons'
+import {base_url, api_url} from '../helper/variables.js'
 
 
 export default function Login() {
@@ -32,7 +33,7 @@ export default function Login() {
     async function login(e) {
         e.preventDefault()
         try {
-            const response  = await fetch('http://localhost:7000/auth/login', {
+            const response  = await fetch(`${api_url}auth/login`, {
                 method: 'POST',
                 body: JSON.stringify(userDetails),
                 headers: {
@@ -47,7 +48,6 @@ export default function Login() {
                 alert(resObject.msg)
             }
             else {
-                console.log('User token: ', resObject.token)
                 console.log('logged in');
                 navigate('/')
             }
