@@ -2,22 +2,11 @@ import { Link } from "react-router-dom"
 import { useState, useEffect } from "react"
 import { base_url, api_url } from '../helper/variables.js'
 
-const path = 'single-post'
-const blogUrl = base_url + path
-
-const blogs1 = [{ imageLink: 'https://miro.medium.com/v2/resize:fit:828/format:webp/1*jyZQjnQAlcoeNCQ8oBkujA.jpeg' },
-{ imageLink: 'https://miro.medium.com/v2/resize:fill:250:168/1*aqmtMRh9xnVwp6-5EEJ4KQ.png' },
-{ imageLink: 'https://miro.medium.com/v2/resize:fill:250:168/0*jxVHjlRyDYVgFuyE' },
-{ imageLink: 'https://miro.medium.com/v2/resize:fill:250:168/1*aqmtMRh9xnVwp6-5EEJ4KQ.png' },
-{ imageLink: 'https://miro.medium.com/v2/resize:fill:250:168/1*aqmtMRh9xnVwp6-5EEJ4KQ.png' },
-{ imageLink: 'https://miro.medium.com/v2/resize:fill:250:168/1*aqmtMRh9xnVwp6-5EEJ4KQ.png' },
-{ imageLink: 'https://miro.medium.com/v2/resize:fill:250:168/1*aqmtMRh9xnVwp6-5EEJ4KQ.png' }
-]
-
 function getBlogUrl(title, blogId) {
     title = title.toLowerCase()
-    let path = title.split(' ').join('-')
-    path += '-' + blogId
+    let slug = title.split(' ').join('-')
+    slug = slug.endsWith('.') ? slug.slice(0, -1) : slug;
+    let path = slug + '-' + blogId
     return base_url + 'posts/' + path
 }
 
@@ -31,6 +20,7 @@ function extractDate(dateString) {
     return monthNames[date.getMonth()] + ' ' + date.getDate()
 }
 
+
 export default function ShortBlogs() {
 
     const [blogs, setBlogs] = useState([])
@@ -43,7 +33,6 @@ export default function ShortBlogs() {
         })
             .then(res => res.json())
             .then(json => {
-                console.log(json)
                 setBlogs(json)
             })
             .catch(err => console.log(err))

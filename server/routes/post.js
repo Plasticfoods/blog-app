@@ -72,8 +72,10 @@ router.get("/:postId", async (req, res) => {
     try {
         const post = await Article.findById(postId)
         if (!post) {
-            return res.status(400).json({ msg: 'Article not found' })
+            console.log('Article not found')
+            return res.status(404).json({ msg: 'Article not found' })
         }
+        console.log('Requested article: ', post)
         res.status(200).json(post)
     }
     catch (err) {

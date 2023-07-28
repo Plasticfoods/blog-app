@@ -14,7 +14,7 @@ export default function Header2(props) {
     const createBlogUrl = `${base_url}new-story`
     
     useEffect(() => {
-        fetch(`http://localhost:7000/myprofile`, {
+        fetch(`${api_url}myprofile`, {
             method: 'GET',
             withCredentials: true,
             credentials: 'include'

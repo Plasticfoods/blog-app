@@ -1,27 +1,76 @@
 import Header2 from "../components/Header2"
-import { Link } from "react-router-dom"
+import { Link, useParams, useNavigate } from "react-router-dom"
 import './BlogPost.css'
 import { base_url, api_url } from "../helper/variables"
+import { useEffect, useState } from "react"
+
+
+function extractDate(dateString) {
+    const date = new Date(dateString)
+    var monthNames = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ]
+
+    return monthNames[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear()
+}
+
 
 export default function BlogPost() {
+
+    const navigate = useNavigate()
+    const { combineId } = useParams()
+    let index = combineId.lastIndexOf('-')
+    const postId = combineId.slice(index+1)
+
+    const [blogData, setBlogData] = useState(null)
+
+    useEffect(() => {
+        fetch(`${api_url}posts/${postId}`, {
+            method: 'GET'
+        })
+        .then(res => {
+            if(res.status === 404) {
+                navigate('*')
+                return null
+            }
+            if(res.status === 500) {
+                navigate('/error/500')
+                return null
+            }
+            return res.json()
+        })
+        .then(data => {
+            if(data !== null) setBlogData(data)
+        })
+        .catch(err => {
+            console.log(err)
+        }) 
+    }, [])
+
     return <article className="blog-post">
         <Header2 />
-        <section className="blog-area">
-            <h1 className="blog-title">Left Amazon after 7.5+ years; Here is my honest review.</h1>
-            <div className="blog-detail">
-                <Link className="name text-base" to={`${base_url}john12`}>Pooya Amini</Link>
-                <div className="flex gap-2">
-                    <Link className="category link text-sm">Culture</Link>
-                    <p>*</p>
-                    <p className="blog-date text-sm">Nov 11, 2022</p>
+        { blogData === null ? 
+            <div className="text-center pt-7">Loading...</div> : 
+
+            (<section className="blog-area">
+                <h1 className="blog-title">{blogData.title}</h1>
+                <div className="blog-detail">
+                    <Link className="name text-base" to={`${base_url}${blogData.username}`}>{blogData.name}</Link>
+                    <div className="flex gap-3">
+                        <Link className="category link text-sm">{blogData.category}</Link>
+                        <p>*</p>
+                        <p className="blog-date text-sm">{extractDate(blogData.uploadDate)}</p>
+                    </div>
                 </div>
-            </div>
-            <picture>
-                <img src={'https://miro.medium.com/v2/resize:fit:828/format:webp/1*iiOnjn_ZymZZFUFI7YSI7g.jpeg'} className="blog-image" alt="blog image" />
-            </picture>
-            <div className="blog-content">
-                I joined during one of the darkest times at Amazon. Thanks to the New York Times controversial article in 2015 (one year after I joined), Amazon started some internal changes to improve the work environment. I came on board as a junior engineer and left as a senior. Looking back on my time as an Amazon employee, I do realize that I had made a lot of mistakes on the job. However, I’m happy that at least I can now recognize what I did wrong and avoid making the same mistakes again over time. To cut the story short, it’s hard for me to think of specific times where I felt indifferent regarding Amazon. My emotion toward the company was basically either love or hate. Based on my personal experience, I would like to share some of the things that I liked the most about Amazon and what I think could be improved or changed altogether.
-            </div>
-        </section>
+                <picture>
+                    <img src={blogData.imageUrl} className="blog-image" alt="blog image" />
+                </picture>
+                <div className="blog-content">
+                    {blogData.content}
+                </div>
+            </section>)
+        }
+        
     </article>
 }
