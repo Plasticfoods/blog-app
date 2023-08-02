@@ -9,7 +9,7 @@ async function getProfile(req, res) {
     try {
         console.log('Username = ', username)
         const user = await User.findOne({username})
-        // if user not present
+        
         if(!user) {
             res.status(404).json({ msg: 'User does not exist' })
             return
@@ -62,7 +62,7 @@ async function getMyProfile(req, res) {
             })
         }
 
-        return res.status(200).json({loggedIn: true, userData: req.user})
+        return res.status(200).json({loggedIn: true, userData: req.userDoc})
     }
     catch(err) {
         console.log(err)

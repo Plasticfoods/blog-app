@@ -2,29 +2,32 @@ import { Link } from "react-router-dom";
 // logo
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBlog } from '@fortawesome/free-solid-svg-icons' 
-import { useState, useEffect } from "react";
+import { useState, useEffect } from "react"
+import { base_url, api_url } from '../helper/variables.js'
+
 
 export default function Header() {
     const [loggedIn, setLoggedIn] = useState(false)
     const [username, setUsername] = useState('')
 
     useEffect(() => {
-        fetch('http://localhost:7000/', {
+        fetch(`${api_url}myprofile`, {
             method: 'GET',
             // necessary to store access token in browser
             withCredentials: true,
             credentials: 'include'
         })
         .then(res => res.json())
-        .then(jsonData => {
-            if(!jsonData.token) {
-                console.log('User without signin')
+        .then(data => {
+            console.log('Data in header: ', data)
+
+            if(!data.loggedIn) {
+                setLoggedIn(false)
                 return
             }
 
             setLoggedIn(true)
-            let username = jsonData.userInfo.username
-            setUsername(username)
+            setUsername(data.userData.username)
         })
         .catch(err => console.log(err))
     }, [])

@@ -27,6 +27,7 @@ export default function Header2(props) {
             return res.json()
         })
         .then(data => {
+            console.log('Data in header2 ', data)
             if(data === null) return
             if(data.userData !== null) setUsername(data.userData.username)
             setLoggedIn(data.loggedIn)

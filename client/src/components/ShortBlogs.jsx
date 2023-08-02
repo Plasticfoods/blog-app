@@ -5,8 +5,10 @@ import { base_url, api_url } from '../helper/variables.js'
 function getBlogUrl(title, blogId) {
     title = title.toLowerCase()
     let slug = title.split(' ').join('-')
-    slug = slug.endsWith('.') ? slug.slice(0, -1) : slug;
+
+    if(slug.endsWith('.') || slug.endsWith('?') || slug.endsWith('/') || slug.endsWith(')')) slug = slug.slice(0, -1)
     let path = slug + '-' + blogId
+    console.log(path)
     return base_url + 'posts/' + path
 }
 
@@ -72,7 +74,7 @@ export default function ShortBlogs() {
                     </div>
                 ))
             ) : (
-                <div className="text-center loading">Loading Posts...</div>
+                <div className="text-center loading">No posts to show</div>
             )
             }
         </section>

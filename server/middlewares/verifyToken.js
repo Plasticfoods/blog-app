@@ -8,7 +8,7 @@ module.exports = async function(req, res, next) {
 
     if(!token) {
         req.token = null
-        console.log('token not found section')
+        console.log('Token is not present.')
         return next()
     }
 
@@ -22,7 +22,7 @@ module.exports = async function(req, res, next) {
             const userDoc = await User.findById(decoded.sub)
             if(!userDoc) return res.status(404).json({msg: 'User not found'})
 
-            req.user = userDoc
+            req.userDoc = userDoc
             req.token = decoded.sub
             req.userId = decoded.sub
             console.log('token verified')

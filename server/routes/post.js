@@ -20,8 +20,12 @@ router.get("/", async (req, res) => {
 
 
 // upload a blog post
-router.post("/", upload.single('image'), async (req, res) => {
+router.post("/", verifyToken, upload.single('image'), async (req, res) => {
     try {
+        if(!req.token) {
+            return res.status(401).json({msg: 'Can not upload blog, unauthorized'})
+        }
+
         let imageUrl = null
 
         // checking if user has uploaded an image
@@ -34,11 +38,12 @@ router.post("/", upload.single('image'), async (req, res) => {
             imageUrl = result.secure_url
         }
         
+        // A regular expression to find and replace all occurrences of one or more consecutive white spaces with a single space
         req.body.title = req.body.title.trim().replace(/\s+/g, ' ')
 
-        // getting user doc to get user id for new article document
-        const userDoc = await User.findOne({ username: req.body.username })
-
+        const userDoc = req.userDoc
+        if(imageUrl === null) imageUrl = 'https://res.cloudinary.com/dq6drt1el/image/upload/v1690996889/default-blog-image_wjf0f7.jpg'
+        
         // added new blog post
         const newPost = new Article({
             ...req.body,
@@ -75,7 +80,6 @@ router.get("/:postId", async (req, res) => {
             console.log('Article not found')
             return res.status(404).json({ msg: 'Article not found' })
         }
-        console.log('Requested article: ', post)
         res.status(200).json(post)
     }
     catch (err) {
@@ -120,6 +124,23 @@ router.delete("/:postId", verifyToken, async (req, res) => {
 });
 
 
+// delete all posts 
+// router.delete('/', async (req, res) => {
+//     try {
+//         if(req.body.token !== "blog_app_delete_all") {
+//             console.log('Unable to delete posts')
+//             return res.status(401).json({msg: 'Invalid token'})
+//         }
+
+//         await Article.deleteMany({})
+//         res.status(200).json({msg: 'posts deleted'})
+//     }
+//     catch(err) {
+//         console.log(err)
+//     }
+// })
+
+
 // upload image to Cloudinary
 const uploadImage = async (imagePath) => {
     const options = {
@@ -134,7 +155,7 @@ const uploadImage = async (imagePath) => {
         return result
     }
     catch (error) {
-        console.error(error);
+        console.error(error)
         return error
     }
 };
