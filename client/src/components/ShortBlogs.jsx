@@ -8,7 +8,6 @@ function getBlogUrl(title, blogId) {
 
     if(slug.endsWith('.') || slug.endsWith('?') || slug.endsWith('/') || slug.endsWith(')')) slug = slug.slice(0, -1)
     let path = slug + '-' + blogId
-    console.log(path)
     return base_url + 'posts/' + path
 }
 

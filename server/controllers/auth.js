@@ -1,6 +1,7 @@
 const User = require('../models/User')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const expiryTime = process.env.SESSION_EXPIRY_TIME
 
 
 async function register(req, res) {
@@ -40,14 +41,14 @@ async function login(req, res) {
     const { email, password } = req.body
 
     try {
-        const user = await User.findOne({ email })
+        let userDoc = await User.findOne({ email })
         // if user not present
-        if (!user) {
+        if (!userDoc) {
             res.status(401).json({ msg: 'Email not found' })
             return
         }
         // matching password
-        const isMatch = await bcrypt.compare(password, user.password)
+        const isMatch = await bcrypt.compare(password, userDoc.password)
         if (!isMatch) {
             res.status(401).json({ msg: 'Password does not match' })
             return
@@ -56,15 +57,26 @@ async function login(req, res) {
 
         // generate JWT
         const payload = {
-            sub: user._id,
-            name: user.name
+            sub: userDoc._id,
+            name: userDoc.name,
+            username: userDoc.username
         }
         const newToken = {
             token: jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '1d' }),
+            date: new Date()
         }
-        const userDoc = await User.findByIdAndUpdate(
-            user._id,
-            { $push: { tokens: newToken } },
+
+        // Deleting tokens which were created before 24 hours or expiry time
+        const oldTokens = userDoc.tokens
+        updatedTokens = oldTokens.filter(element => {
+            const timeDifference = new Date().getTime() - element.createdAt.getTime()
+            if(timeDifference < expiryTime) return true
+        })
+        updatedTokens.push(newToken)
+
+        await User.findByIdAndUpdate(
+            userDoc._id,
+            { $set: { tokens: updatedTokens } },
             { new: true },
         )
 
@@ -72,11 +84,11 @@ async function login(req, res) {
         res.cookie("access_token", newToken.token, {
             httpOnly: true
         })
-        res.cookie('uid', user._id, { httpOnly: false })
+        // res.cookie('uid', userDoc._id, { httpOnly: false })
         res.status(200).json({ msg: 'logged in', token: newToken.token })
     }
     catch (err) {
-        console.log(err.message)
+        console.log(err)
         res.status(500).json({ msg: 'Server Error' })
     }
 }
@@ -85,23 +97,23 @@ async function login(req, res) {
 async function logout(req, res) {
     try {
         if (!req.token) {
-            res.status(401).json({ msg: 'Token not found' })
+            res.status(401).json({ msg: 'Unauthorized' })
             return
         }
 
-        const oldTokens = req.user.tokens
+        const oldTokens = req.userDoc.tokens
         const currToken = req.cookies.access_token
 
         updatedTokens = oldTokens.filter((element) => {
             if (element.token !== currToken) return true
         })
 
-        const user = req.user
-        await User.findByIdAndUpdate(user._id, { tokens: updatedTokens })
+        // update the token array in user document
+        await User.findByIdAndUpdate(req.userDoc._id, { tokens: updatedTokens })
 
         res.clearCookie("access_token")
         console.log('logged out')
-        res.status(200).json({ message: "Successfully logged out." });
+        res.status(200).json({ message: "Logged out." });
     }
     catch (err) {
         console.log(err)

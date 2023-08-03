@@ -27,7 +27,6 @@ export default function Header2(props) {
             return res.json()
         })
         .then(data => {
-            console.log('Data in header2 ', data)
             if(data === null) return
             if(data.userData !== null) setUsername(data.userData.username)
             setLoggedIn(data.loggedIn)
@@ -35,6 +34,19 @@ export default function Header2(props) {
         .catch(err => console.log(err))
     }, [])
 
+    function logout(e) {
+        fetch(`${api_url}auth/logout`, {
+            method: 'POST',
+            withCredentials: true,
+            credentials: 'include'
+        })
+        .then(res => res.json())
+        .then(json => {
+            console.log('logged out')
+            navigate('/')
+        })
+        .catch(err => console.log(err))
+    }
 
     return (
         <header className="header2 mobile-padding pt-3">
@@ -44,11 +56,11 @@ export default function Header2(props) {
                 </Link>
                 <div className="name">Skeleton</div>
             </div>
-            <div className='nav-icons flex flex-row items-center lg:gap-8 gap-4'>
+            <div className='nav-icons flex flex-row items-center lg:gap-10 gap-4'>
                 {loggedIn ?
                     ( 
                     <>
-                        <button onClick={(e) => props.logout(e)} >logout</button>
+                        <button onClick={logout}>Logout</button>
                         <Link className='flex gap-2' to={createBlogUrl}>
                             <FontAwesomeIcon icon={faPenToSquare} className='write-icon' />
                             <p>Write</p>

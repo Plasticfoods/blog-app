@@ -19,13 +19,10 @@ export default function Header() {
         })
         .then(res => res.json())
         .then(data => {
-            console.log('Data in header: ', data)
-
             if(!data.loggedIn) {
                 setLoggedIn(false)
                 return
             }
-
             setLoggedIn(true)
             setUsername(data.userData.username)
         })
@@ -49,7 +46,7 @@ export default function Header() {
                 {loggedIn ? (
                     <>
                         <Link to={`/${username}`} className="nav-item">Profile</Link>
-                        <Link to='/auth/register'> <button className="btn btn-action">Write</button> </Link>
+                        <Link> <button className="btn btn-action">Write</button> </Link>
                     </>
                 ) : (
                     <>

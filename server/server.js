@@ -5,7 +5,11 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const cloudinary = require('cloudinary').v2;
+
 const PORT = process.env.PORT || 7000
+const cloud_name = process.env.CLOUDINARY_CLOUD_NAME
+const api_key = process.env.CLOUDINARY_API_KEY
+const api_secret = process.env.CLOUDINARY_API_SECRET
 
 const indexRouter = require('./routes/index')
 const authRouter = require('./routes/auth')
@@ -23,9 +27,9 @@ app.use('/users', userRouter)
 
 
 cloudinary.config({
-    cloud_name: 'dq6drt1el',
-    api_key: '679222394755316',
-    api_secret: 'esy9qgDLbz4UYkHd5606DJiu98s'
+    cloud_name,
+    api_key,
+    api_secret
 });
 
 mongoose.connect(process.env.DATABASE_URL,

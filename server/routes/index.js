@@ -5,8 +5,6 @@ const verifyToken = require('../middlewares/verifyToken')
 
 // index route
 router.get('/', verifyToken, (req, res) => {
-    console.log('request from /')
-
     if(!req.token) {
         res.json({
             token: null

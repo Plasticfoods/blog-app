@@ -39,10 +39,8 @@ export default function ProfileBlogs() {
             return res.json()
         })
         .then(data => {
-            console.log('username = ' + username)
             if (data && data.blogs && data.blogs.length > 0) {
                 setBlogs(data.blogs)
-                console.log(blogs)
             } else {
                 setFlag(true);
             }

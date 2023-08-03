@@ -32,27 +32,12 @@ function Profile() {
         })
         .catch(err => console.log(err))
     }, [username])
-    
-
-    function logout(e) {
-        fetch(`${api_url}auth/logout`, {
-            method: 'POST',
-            withCredentials: true,
-            credentials: 'include'
-        })
-        .then(res => res.json())
-        .then(json => {
-            console.log('logged out')
-            navigate('/')
-        })
-        .catch(err => console.log(err))
-    }
 
 
     return (
         <UserContext.Provider value={userData}>
             <div className="profile">
-                <Header2 logout={logout} />
+                <Header2 />
                 <UserDetails value={userData} />
                 <div className='profile-main'>
                     <ProfileBlogs />

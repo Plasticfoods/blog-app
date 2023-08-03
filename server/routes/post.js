@@ -98,11 +98,11 @@ router.delete("/:postId", verifyToken, async (req, res) => {
     if (!req.token) return res.status(401).json({ msg: 'Unauthorized' })
 
     try {
-        // get the user document and update blogs array
-        const userDoc = await User.findById(req.userId)
+        const userDoc = req.userDoc
         const blogIds = userDoc.blogs
+
         for (let i = 0 ; i<blogIds.length ; i++) {
-            if (blogIds[i] === req.params.postId) {
+            if (blogIds[i] == req.params.postId) {
                 blogIds.splice(i, 1)
                 break
             }
@@ -114,14 +114,13 @@ router.delete("/:postId", verifyToken, async (req, res) => {
     
         // deleting a blog from Article 
         const deletedPost = await Article.deleteOne({ _id: req.params.postId })
-        console.log('Deleted article: ', deletedPost)
         res.status(200).json({ msg: 'Article deleted' })
     }
     catch(err) {
         console.log(err)
         res.status(500).json({msg: 'Server Error'})
     }
-});
+})
 
 
 // delete all posts 
