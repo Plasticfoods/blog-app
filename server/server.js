@@ -4,7 +4,7 @@ const app = express();
 const mongoose = require('mongoose')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
-const cloudinary = require('cloudinary').v2;
+const cloudinary = require('cloudinary').v2
 
 const PORT = process.env.PORT || 7000
 const cloud_name = process.env.CLOUDINARY_CLOUD_NAME
@@ -16,8 +16,19 @@ const authRouter = require('./routes/auth')
 const postRouter = require('./routes/post')
 const userRouter = require('./routes/user')
 
-// app.use(cors())
-app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
+// Set CORS headers
+app.use(cors({
+    credentials: true,
+    origin: 'http://localhost:3000/'
+}))
+
+// Allow credentials and specific origin
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Credentials', 'true')
+    res.header('Access-Control-Allow-Origin', 'http://localhost:3000/')
+    next()
+})
+
 app.use(express.json())
 app.use(cookieParser())
 app.use('/', indexRouter)
@@ -30,7 +41,7 @@ cloudinary.config({
     cloud_name,
     api_key,
     api_secret
-});
+})
 
 mongoose.connect(process.env.DATABASE_URL,
     {
@@ -38,7 +49,7 @@ mongoose.connect(process.env.DATABASE_URL,
     }
 )
     .then(() => console.log('Database connection successfull'))
-    .catch((err) => console.log('error in db connection', err));
+    .catch((err) => console.log('error in db connection', err))
 
 
 app.listen(7000, () => { console.log(`Server running on port ${PORT}`) })
