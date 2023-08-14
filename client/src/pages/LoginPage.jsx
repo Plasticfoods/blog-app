@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { InputAdornment, IconButton, TextField, Button } from '@material-ui/core';
-import { Visibility, VisibilityOff } from '@material-ui/icons';
+import { InputAdornment, IconButton, TextField, Button } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBlog } from '@fortawesome/free-solid-svg-icons'
 import {base_url, api_url} from '../helper/variables.js'
