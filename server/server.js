@@ -19,13 +19,13 @@ const userRouter = require('./routes/user')
 // Set CORS headers
 app.use(cors({
     credentials: true,
-    origin: 'http://localhost:3000/'
+    origin: 'http://localhost:3000'
 }))
 
 // Allow credentials and specific origin
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Credentials', 'true')
-    res.header('Access-Control-Allow-Origin', 'http://localhost:3000/')
+    res.header('Access-Control-Allow-Origin', 'http://localhost:3000')
     next()
 })
 

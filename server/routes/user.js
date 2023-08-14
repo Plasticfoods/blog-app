@@ -34,9 +34,9 @@ router.get('/:username', async (req, res) => {
 // get a user posts
 router.get('/:username/posts', async (req, res) => {
     const username = req.params.username
-    console.log(username)
     try {
         const userDoc = await User.findOne({username})
+        console.log(userDoc.blogs)
         if(!userDoc) {
             return res.status(404).json({msg: 'No user found'})
         }
