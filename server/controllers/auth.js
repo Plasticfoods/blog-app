@@ -88,7 +88,7 @@ async function login(req, res) {
         })
         // res.cookie('uid', userDoc._id, { httpOnly: false })
         res.status(200).json({ msg: 'logged in', token: newToken.token })
-        console.log('logged in')
+        console.log('logged in');
     }
     catch (err) {
         console.log(err)
