@@ -53,7 +53,6 @@ async function login(req, res) {
             res.status(401).json({ msg: 'Password does not match' })
             return
         }
-        console.log('logged in')
 
         // generate JWT
         const payload = {
@@ -65,6 +64,8 @@ async function login(req, res) {
             token: jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '1d' }),
             date: new Date()
         }
+
+        console.log('new token', newToken.token)
 
         // Deleting tokens which were created before 24 hours or expiry time
         const oldTokens = userDoc.tokens
@@ -86,6 +87,7 @@ async function login(req, res) {
         })
         // res.cookie('uid', userDoc._id, { httpOnly: false })
         res.status(200).json({ msg: 'logged in', token: newToken.token })
+        console.log('logged in')
     }
     catch (err) {
         console.log(err)

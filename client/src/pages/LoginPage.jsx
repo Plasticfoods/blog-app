@@ -41,19 +41,19 @@ export default function Login() {
                 },
                 // necessary to store access token in browser
                 withCredentials: true,
-                credentials: 'include'
+                credentials: 'include',
             })
-            const resObject = await response.json();
             if(response.status != 200) {
-                alert(resObject.msg)
+                alert('Error')
+                return
             }
-            else {
-                console.log('logged in');
-                navigate('/')
-            }
+            // const resObject = await response.json();
+            console.log('logged in');
+            navigate('/')
         }
         catch(err) {
             console.log(err)
+            alert('Server Error')
         }
     }
 
