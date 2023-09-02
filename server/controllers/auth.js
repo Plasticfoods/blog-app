@@ -83,7 +83,8 @@ async function login(req, res) {
 
         // set JWT in cookie
         res.cookie("access_token", newToken.token, {
-            httpOnly: true
+            httpOnly: true,
+            secure: true
         })
         // res.cookie('uid', userDoc._id, { httpOnly: false })
         res.status(200).json({ msg: 'logged in', token: newToken.token })
