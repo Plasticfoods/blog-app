@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser')
 const cloudinary = require('cloudinary').v2
 
 const PORT = process.env.PORT || 7000
+const clientUrl = process.env.CLIENT_URL
 const cloud_name = process.env.CLOUDINARY_CLOUD_NAME
 const api_key = process.env.CLOUDINARY_API_KEY
 const api_secret = process.env.CLOUDINARY_API_SECRET
@@ -19,13 +20,13 @@ const userRouter = require('./routes/user')
 // Set CORS headers
 app.use(cors({
     credentials: true,
-    origin: 'https://medium-blog-five.vercel.app'
+    origin: clientUrl
 }))
 
 // Allow credentials and specific origin
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Credentials', 'true')
-    res.header('Access-Control-Allow-Origin', 'https://medium-blog-five.vercel.app')
+    res.header('Access-Control-Allow-Origin', clientUrl)
     next()
 })
 
@@ -43,8 +44,7 @@ cloudinary.config({
     api_secret
 })
 
-mongoose.connect(process.env.DATABASE_URL,
-    {
+mongoose.connect(process.env.DATABASE_URL, {
         useNewUrlParser: true, useUnifiedTopology: true
     }
 )
