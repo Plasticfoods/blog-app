@@ -3,6 +3,10 @@ const router = express.Router()
 const indexController = require('../controllers/index') 
 const verifyToken = require('../middlewares/verifyToken')
 
+router.get('/', (req, res) => {
+    res.send('Hello');
+})
+
 // index route
 router.get('/', verifyToken, (req, res) => {
     if(!req.token) {
@@ -20,7 +24,7 @@ router.get('/', verifyToken, (req, res) => {
 
 
 // test route
-router.post('/test', verifyToken, (req, res) => {
+router.get('/test', verifyToken, (req, res) => {
     console.log('test route')
     res.send(req.user)
 })
