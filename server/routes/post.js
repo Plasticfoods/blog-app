@@ -11,8 +11,8 @@ const verifyToken = require('../middlewares/verifyToken')
 // get all blog posts
 router.get("/", async (req, res) => {
     try {
-        const blogPosts = await Article.find();
-        res.status(200).json(blogPosts);
+        const blogDocs = await Article.find();
+        res.status(200).json(blogDocs);
     } catch (err) {
         console.log(err);
     }

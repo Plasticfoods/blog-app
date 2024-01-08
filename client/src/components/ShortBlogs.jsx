@@ -6,7 +6,9 @@ function getBlogUrl(title, blogId) {
     title = title.toLowerCase()
     let slug = title.split(' ').join('-')
 
-    if(slug.endsWith('.') || slug.endsWith('?') || slug.endsWith('/') || slug.endsWith(')')) slug = slug.slice(0, -1)
+    if(slug.endsWith('.') || slug.endsWith('?') || slug.endsWith('/') || slug.endsWith(')')) {
+        slug = slug.slice(0, -1)
+    }
     let path = slug + '-' + blogId
     return base_url + 'posts/' + path
 }
@@ -27,16 +29,24 @@ export default function ShortBlogs() {
     const [blogs, setBlogs] = useState([])
 
     useEffect(() => {
-        fetch(`${api_url}posts`, {
-            method: 'GET',
-            // withCredentials: true,
-            // credentials: 'include'
-        })
-            .then(res => res.json())
-            .then(json => {
-                setBlogs(json)
-            })
-            .catch(err => console.log(err))
+        const fetchBlogsData = async () => {
+            try {
+                const response = await fetch(`${api_url}posts`, {
+                    method: 'GET'
+                })
+                const data = await response.json()
+                if(!response.ok) {
+                    alert(data.message)
+                    return
+                }
+                setBlogs(data)
+            }
+            catch(err) {
+                console.log(err)
+                alert('Server Error')
+            }
+        }
+        fetchBlogsData()
     }, [])
 
 
