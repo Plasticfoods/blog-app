@@ -1,0 +1,14 @@
+
+.fill-blog {
+    width: 55%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 2rem;
+
+    display: grid;
+    gap: 1.2rem;
+}
+
+.btn-add-blog {
+    background-color: green;
+}
