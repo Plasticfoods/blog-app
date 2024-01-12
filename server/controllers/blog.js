@@ -1,10 +1,10 @@
 const Blog = require('../models/Blog')
 const cloudinary = require("cloudinary").v2;
-// const upload = multer({ dest: 'uploads/' }); // Destination folder for uploaded files
 const User = require("../models/User");
 const defaultBlogImage = 'https://res.cloudinary.com/dq6drt1el/image/upload/v1690996889/default-blog-image_wjf0f7.jpg'
 
 
+// get all blogs
 const getBlogs = async (req, res) => {
     try {
         const blogDocs = await Blog.find();
@@ -16,6 +16,8 @@ const getBlogs = async (req, res) => {
     }
 }
 
+
+// upload a blog
 const uploadBlog = async (req, res) => {
     try {
         if(!req.token) {
@@ -66,6 +68,7 @@ const uploadBlog = async (req, res) => {
     }
 }
 
+
 // get a specific blog with the help of id
 const getBlog = async (req, res) => {
     const blogId = req.params.postId
@@ -82,6 +85,7 @@ const getBlog = async (req, res) => {
         res.status(500).json({ msg: 'Server Error' })
     }
 } 
+
 
 // upload image to Cloudinary
 const uploadImageToCloudinary = async (imagePath) => {

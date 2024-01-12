@@ -1,7 +1,7 @@
-import Header2 from "../components/Header2"
+import Header2 from "../../components/Header2"
 import { Link, useParams, useNavigate } from "react-router-dom"
 import './BlogPost.css'
-import { base_url, api_url } from "../helper/variables"
+import { base_url, api_url } from "../../helper/variables"
 import { useEffect, useState } from "react"
 
 
