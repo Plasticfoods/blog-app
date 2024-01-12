@@ -1,5 +1,5 @@
 const User = require('../models/User')
-const Article = require('../models/Article')
+const Blog = require('../models/Blog')
 
 
 // returns the user profile
@@ -40,7 +40,7 @@ async function getUserPosts(req, res) {
         const posts = []
         for(let i=0 ; i<blogIds.length ; i++) {
             const blogId = blogIds[i]
-            const post = await Article.findById(blogId)
+            const post = await Blog.findById(blogId)
             posts.push(post)
         }
         res.status(200).json({msg: 'Success', blogs: posts})

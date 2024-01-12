@@ -15,7 +15,7 @@
     font-size: 2.3rem;
     font-weight: 700;
     line-height: 1.8ch;
-    word-break: break-all;
+    word-break:keep-all;
 }
 
 .blog-detail {
