@@ -1,9 +1,9 @@
 
 .fill-blog {
-    width: 55%;
+    width: 90%;
     margin-left: auto;
     margin-right: auto;
-    padding-top: 2rem;
+    padding-top: 2.5rem;
 
     display: grid;
     gap: 1.2rem;
@@ -11,4 +11,32 @@
 
 .btn-add-blog {
     background-color: green;
+}
+
+/* xs */
+@media (min-width: 475px) {
+    .fill-blog {
+        max-width: 85%;
+    }
+}
+
+/* sm */
+@media (min-width: 640px) {
+    .fill-blog {
+        max-width: 540px;
+    }
+}
+
+/* md */
+@media (min-width: 768px) {
+    .fill-blog {
+        max-width: 55%;
+    }
+}
+
+/* 2xl */
+@media (min-width: 1536px) {
+    .fill-blog {
+        max-width: 810px;
+    }
 }
