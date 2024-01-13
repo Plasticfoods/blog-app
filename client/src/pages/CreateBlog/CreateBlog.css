@@ -1,0 +1,68 @@
+
+
+.fill-blog {
+    box-sizing: border-box;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 2.5rem;
+    padding-bottom: 2rem;
+
+    display: grid;
+    gap: 1.5rem;
+}
+
+.btn-add-blog {
+    background-color: green;
+}
+
+/* Add this style to your CSS */
+.content .ql-editor {
+    font-size: 16px; /* Adjust the font size as needed */
+}
+
+/* Add this style to your CSS */
+.content .ql-toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: #ffffff; /* Optional: Set a background color for the toolbar */
+}
+
+/* Add this style to your CSS */
+.content {
+    height: 25rem;
+}
+
+.content .ql-container {
+    height: 100%;
+}
+
+
+/* xs */
+@media (min-width: 475px) {
+    .fill-blog {
+        max-width: 85%;
+    }
+}
+
+/* sm */
+@media (min-width: 640px) {
+    .fill-blog {
+        max-width: 540px;
+    }
+}
+
+/* md */
+@media (min-width: 768px) {
+    .fill-blog {
+        max-width: 65%;
+    }
+}
+
+/* 2xl */
+@media (min-width: 1536px) {
+    .fill-blog {
+        max-width: 910px;
+    }
+}

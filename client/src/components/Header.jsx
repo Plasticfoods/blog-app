@@ -46,7 +46,7 @@ export default function Header() {
                 {loggedIn ? (
                     <>
                         <Link to={`/${username}`} className="nav-item">Profile</Link>
-                        <Link> <button className="btn btn-action">Write</button> </Link>
+                        <Link to={'/create'}> <button className="btn btn-action">Write</button> </Link>
                     </>
                 ) : (
                     <>
