@@ -13,6 +13,10 @@ function getBlogUrl(title, blogId) {
     return base_url + 'posts/' + path
 }
 
+function getShortContent(content) {
+
+}
+
 function extractDate(dateString) {
     const date = new Date(dateString)
     var monthNames = [
@@ -63,9 +67,9 @@ export default function ShortBlogs() {
                             <Link className="short-blog-title link" to={getBlogUrl(element.title, element._id)}>
                                 {element.title}
                             </Link>
-                            <p className="short-blog-content">
+                            <div className="short-blog-content">
                                 {`${element.content.substring(0,120)}...`}
-                            </p>
+                            </div>
                             <div className="short-blog-details">
                                 <p className="date"> {extractDate(element.uploadDate)} </p>
                                 <div>.</div>

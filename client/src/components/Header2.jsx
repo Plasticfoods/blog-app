@@ -11,7 +11,7 @@ export default function Header2(props) {
     const navigate = useNavigate()
     const [username, setUsername] = useState('')
     const [loggedIn, setLoggedIn] = useState(false)
-    const createBlogUrl = `${base_url}new-story`
+    const createBlogUrl = `${base_url}create`
     
     useEffect(() => {
         fetch(`${api_url}myprofile`, {

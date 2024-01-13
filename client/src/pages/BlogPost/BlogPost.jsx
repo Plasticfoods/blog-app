@@ -3,9 +3,10 @@ import { Link, useParams, useNavigate } from "react-router-dom"
 import './BlogPost.css'
 import { base_url, api_url } from "../../helper/variables"
 import { useEffect, useState } from "react"
-
+import DOMPurify from 'dompurify';
 
 function extractDate(dateString) {
+
     const date = new Date(dateString)
     var monthNames = [
     "Jan", "Feb", "Mar", "Apr", "May", "Jun",
@@ -24,6 +25,7 @@ export default function BlogPost() {
     const postId = combineId.slice(index+1)
 
     const [blogData, setBlogData] = useState(null)
+    const [html, setHtml] = useState('')
 
     useEffect(() => {
         fetch(`${api_url}posts/${postId}`, {
@@ -41,7 +43,10 @@ export default function BlogPost() {
             return res.json()
         })
         .then(data => {
-            if(data !== null) setBlogData(data)
+            if(data !== null) {
+                setBlogData(data)
+                setHtml(data.content)
+            }
         })
         .catch(err => {
             console.log(err)
@@ -67,7 +72,7 @@ export default function BlogPost() {
                     <img src={blogData.imageUrl} className="blog-image" alt="blog image" />
                 </picture>
                 <div className="blog-content">
-                    {blogData.content}
+                    <div dangerouslySetInnerHTML= { {__html: html}}></div>
                 </div>
             </section>)
         }

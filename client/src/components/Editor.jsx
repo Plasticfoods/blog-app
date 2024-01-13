@@ -12,16 +12,16 @@ export default function Editor({ content, setContent }) {
                 { indent: '-1' },
                 { indent: '+1' },
             ],
-            ['link'], // Remove 'image' from the toolbar
+            ['link'],
             ['clean'],
         ],
     };
 
     const styles = {
-        height: "400px", // Adjust the height as needed
-        overflowY: "auto", // Add scrollbar if content overflows
-        border: "1px solid black", // Add border styles here
-        borderRadius: "5px", // Optional: Add border-radius for rounded corners
+        height: "100%", // Adjust the height as needed
+        overflowY: "auto",
+        border: "1px solid black",
+        borderRadius: "7px",
     };
 
     return (
