@@ -6,13 +6,18 @@ import categories from "../../helper/categories";
 import { base_url, api_url } from '../../helper/variables'
 import { redirect } from "react-router-dom";
 import DOMPurify from 'dompurify';
+import { useNavigate } from "react-router-dom";
+import createBlogUrl from "../../helper/createBlogUrl";
 
 function CreateBlog() {
+    const navigate = useNavigate()
+    const maxLength = 80
+
     const [title, setTitle] = useState('')
     const [summary, setSummary] = useState('')
     const [content, setContent] = useState(null)
     const [file, setFile] = useState(null)
-    const [category, setCategory] = useState('Other')
+    const [category, setCategory] = useState('Category')
 
     const handleClick = () => {
         if(title == '' || summary == '' || content == '' || category == 'Category') {
@@ -26,13 +31,9 @@ function CreateBlog() {
         const formData = new FormData()
         formData.append('image', file)
         formData.append('title', title)
+        formData.append('summary', summary)
         formData.append('content', sanitizedHTML)
         formData.append('category', category)
-
-        console.log(title)
-        console.log(sanitizedHTML)
-        console.log(file)
-        console.log(category)
 
         const postBlog = async () => {
             try {
@@ -47,16 +48,17 @@ function CreateBlog() {
 
                 if(!response.ok) {
                     alert(data.message)
-                    redirect('/')
+                    navigate('/')
                     return
                 }
-                console.log('Blog Uploaded')   
-                redirect('/')
+                console.log(data)   
+                const blogUrl = createBlogUrl(data.blog.title, data.blog._id)
+                window.location.href = blogUrl;
             }
             catch(err) {
                 console.log(err)
                 alert('Server Error')
-                redirect('/')
+                navigate('/')
             }
         }
         postBlog()
@@ -68,7 +70,8 @@ function CreateBlog() {
             <section className="fill-blog">
                 {/* Title */}
                 <textarea className="py-3 px-4 block w-full rounded-lg text-2xl border border-black"
-                    rows="1" placeholder="Title" onChange={(e) => setTitle(e.target.value)} value={title}>
+                    rows="1" placeholder="Title" onChange={(e) => setTitle(e.target.value)} 
+                    value={title} maxLength={maxLength}>
                 </textarea>
                 {/* Summary */}
                 <textarea className="py-3 px-4 block w-full rounded-lg text-xl border border-black" 

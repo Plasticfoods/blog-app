@@ -21,7 +21,7 @@ const getBlogs = async (req, res) => {
 const uploadBlog = async (req, res) => {
     try {
         if(!req.token) {
-            return res.status(401).json({msg: 'Can not upload blog, unauthorized'})
+            return res.status(401).json({message: 'Can not upload blog, unauthorized'})
         }
 
         let imageUrl = null
@@ -30,7 +30,7 @@ const uploadBlog = async (req, res) => {
         if(req.file) {
             const result = await uploadImageToCloudinary(req.file.path)
             if (result.secure_url === undefined) {
-                res.status(400).json({ msg: result.message })
+                res.status(400).json({ message: result.message })
                 return
             }
             imageUrl = result.secure_url
@@ -60,11 +60,11 @@ const uploadBlog = async (req, res) => {
         ).exec();
 
         console.log('Blog uploaded')
-        res.status(200).json({ msg: 'Blog uploaded' })
+        res.status(200).json({ message: 'Blog uploaded', blog: newPost })
     }
     catch (err) {
         console.log(err)
-        res.status(500).json({ msg: 'Server Error' })
+        res.status(500).json({ message: 'Server Error' })
     }
 }
 
@@ -76,13 +76,13 @@ const getBlog = async (req, res) => {
         const blogDoc = await Blog.findById(blogId)
         if (!blogDoc) {
             console.log('Blog not found')
-            return res.status(404).json({ msg: 'Blog not found' })
+            return res.status(404).json({ message: 'Blog not found' })
         }
         res.status(200).json(blogDoc)
     }
     catch (err) {
         console.log(err)
-        res.status(500).json({ msg: 'Server Error' })
+        res.status(500).json({ message: 'Server Error' })
     }
 } 
 

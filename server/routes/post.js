@@ -24,7 +24,7 @@ router.patch("/:postId");
 
 // delete a post
 router.delete("/:postId", verifyToken, async (req, res) => {
-    if (!req.token) return res.status(401).json({ msg: 'Unauthorized' })
+    if (!req.token) return res.status(401).json({ message: 'Unauthorized' })
 
     try {
         const userDoc = req.userDoc
@@ -43,11 +43,11 @@ router.delete("/:postId", verifyToken, async (req, res) => {
     
         // deleting a blog from Blog 
         const deletedPost = await Blog.deleteOne({ _id: req.params.postId })
-        res.status(200).json({ msg: 'Blog deleted' })
+        res.status(200).json({ message: 'Blog deleted' })
     }
     catch(err) {
         console.log(err)
-        res.status(500).json({msg: 'Server Error'})
+        res.status(500).json({message: 'Server Error'})
     }
 })
 
@@ -57,36 +57,17 @@ router.delete("/:postId", verifyToken, async (req, res) => {
 //     try {
 //         if(req.body.token !== "blog_app_delete_all") {
 //             console.log('Unable to delete posts')
-//             return res.status(401).json({msg: 'Invalid token'})
+//             return res.status(401).json({message: 'Invalid token'})
 //         }
 
 //         await Blog.deleteMany({})
-//         res.status(200).json({msg: 'posts deleted'})
+//         res.status(200).json({message: 'posts deleted'})
 //     }
 //     catch(err) {
 //         console.log(err)
 //     }
 // })
 
-
-// upload image to Cloudinary
-const uploadImage = async (imagePath) => {
-    const options = {
-        use_filename: true,
-        unique_filename: false,
-        overwrite: true,
-    };
-
-    try {
-        // Upload the image
-        const result = await cloudinary.uploader.upload(imagePath, options);
-        return result
-    }
-    catch (error) {
-        console.error(error)
-        return error
-    }
-};
 
 
 module.exports = router;
