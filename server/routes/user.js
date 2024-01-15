@@ -41,7 +41,6 @@ router.get('/:username/posts', async (req, res) => {
         }
 
         const blogDocs = await Blog.find({username})
-        console.log(blogDocs)
 
         res.status(200).json({message: 'Success', blogs: blogDocs})
     }
