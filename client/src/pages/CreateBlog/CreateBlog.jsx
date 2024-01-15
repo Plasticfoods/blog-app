@@ -4,7 +4,6 @@ import Editor from "../../components/Editor";
 import './CreateBlog.css'
 import categories from "../../helper/categories";
 import { base_url, api_url } from '../../helper/variables'
-import DOMPurify from 'dompurify';
 import { useNavigate } from "react-router-dom";
 import createBlogUrl from "../../helper/createBlogUrl";
 
@@ -25,13 +24,13 @@ function CreateBlog() {
         }
 
         // Sanitize the user input with DOMPurify
-        const sanitizedHTML = DOMPurify.sanitize(content);
+        // const sanitizedHTML = DOMPurify.sanitize(content);
 
         const formData = new FormData()
         formData.append('image', file)
         formData.append('title', title)
         formData.append('summary', summary)
-        formData.append('content', sanitizedHTML)
+        formData.append('content', content)
         formData.append('category', category)
 
         const postBlog = async () => {

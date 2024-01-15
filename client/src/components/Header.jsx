@@ -11,6 +11,7 @@ export default function Header() {
     const [username, setUsername] = useState('')
 
     useEffect(() => {
+
         fetch(`${api_url}myprofile`, {
             method: 'GET',
             // necessary to store access token in browser
