@@ -4,7 +4,6 @@ import Editor from "../../components/Editor";
 import './CreateBlog.css'
 import categories from "../../helper/categories";
 import { base_url, api_url } from '../../helper/variables'
-import { redirect } from "react-router-dom";
 import DOMPurify from 'dompurify';
 import { useNavigate } from "react-router-dom";
 import createBlogUrl from "../../helper/createBlogUrl";

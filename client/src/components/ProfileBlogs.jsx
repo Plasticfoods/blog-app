@@ -5,13 +5,6 @@ import { Link } from 'react-router-dom'
 import createBlogUrl from '../helper/createBlogUrl'
 import getShortSummary from '../helper/getShortSummary'
 
-// function getBlogUrl(title, blogId) {
-//     title = title.toLowerCase()
-//     let slug = title.split(' ').join('-')
-//     slug = slug.endsWith('.') ? slug.slice(0, -1) : slug;
-//     let path = slug + '-' + blogId
-//     return base_url + 'posts/' + path
-// }
 
 function extractDate(dateString) {
     const date = new Date(dateString)
