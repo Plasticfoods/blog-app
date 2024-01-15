@@ -6,6 +6,8 @@ import categories from "../../helper/categories";
 import { base_url, api_url } from '../../helper/variables'
 import { useNavigate } from "react-router-dom";
 import createBlogUrl from "../../helper/createBlogUrl";
+import DOMPurify from 'dompurify';
+
 
 function CreateBlog() {
     const navigate = useNavigate()
