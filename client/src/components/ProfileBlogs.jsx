@@ -2,14 +2,16 @@ import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { base_url, api_url } from '../helper/variables'
 import { Link } from 'react-router-dom'
+import createBlogUrl from '../helper/createBlogUrl'
+import getShortSummary from '../helper/getShortSummary'
 
-function getBlogUrl(title, blogId) {
-    title = title.toLowerCase()
-    let slug = title.split(' ').join('-')
-    slug = slug.endsWith('.') ? slug.slice(0, -1) : slug;
-    let path = slug + '-' + blogId
-    return base_url + 'posts/' + path
-}
+// function getBlogUrl(title, blogId) {
+//     title = title.toLowerCase()
+//     let slug = title.split(' ').join('-')
+//     slug = slug.endsWith('.') ? slug.slice(0, -1) : slug;
+//     let path = slug + '-' + blogId
+//     return base_url + 'posts/' + path
+// }
 
 function extractDate(dateString) {
     const date = new Date(dateString)
@@ -40,6 +42,7 @@ export default function ProfileBlogs() {
         })
         .then(data => {
             if (data && data.blogs && data.blogs.length > 0) {
+                console.log(data.blogs)
                 setBlogs(data.blogs)
             } else {
                 setFlag(true);
@@ -64,10 +67,10 @@ export default function ProfileBlogs() {
                             {/* Author name, title, content etc.. */}
                             <div className="short-blog-left">
                                 <div className="short-blog-date link">{extractDate(element.uploadDate)}</div>
-                                <Link className="short-blog-title link" to={getBlogUrl(element.title, element._id)}>
+                                <Link className="short-blog-title link" to={createBlogUrl(element.title, element._id)}>
                                     {element.title}
                                 </Link>
-                                <p className="short-blog-content">{element.content.substring(0, 90)}</p>
+                                <p className="short-blog-content">{ getShortSummary(element.summary) }</p>
                                 <Link className="short-blog-tag">{element.category}</Link>
                             </div>
                             {/* Blog Image */}

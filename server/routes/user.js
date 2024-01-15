@@ -6,7 +6,7 @@ const Blog = require('../models/Blog')
 
 // test 
 router.get('/test', (req, res) => {
-    res.status(200).json({msg: 'test route'})
+    res.status(200).json({message: 'test route'})
 })
 
 // get a specific user details
@@ -18,7 +18,7 @@ router.get('/:username', async (req, res) => {
         const userDoc = await User.findOne({username})
         // if user not present
         if(!userDoc) {
-            res.status(404).json({ msg: 'User does not exist' })
+            res.status(404).json({ message: 'User does not exist' })
             return
         }
 
@@ -26,7 +26,7 @@ router.get('/:username', async (req, res) => {
     }
     catch(err) {
         console.log(err)
-        res.status(500).json({msg: 'Server Error'})
+        res.status(500).json({message: 'Server Error'})
     }
 })
 
@@ -36,23 +36,18 @@ router.get('/:username/posts', async (req, res) => {
     const username = req.params.username
     try {
         const userDoc = await User.findOne({username})
-        console.log(userDoc.blogs)
         if(!userDoc) {
-            return res.status(404).json({msg: 'No user found'})
+            return res.status(404).json({message: 'No such user present'})
         }
-        const blogIds = userDoc.blogs
 
-        const posts = []
-        for(let i=0 ; i<blogIds.length ; i++) {
-            const blogId = blogIds[i]
-            const post = await Blog.findById(blogId)
-            posts.push(post)
-        }
-        res.status(200).json({msg: 'Success', blogs: posts})
+        const blogDocs = await Blog.find({username})
+        console.log(blogDocs)
+
+        res.status(200).json({message: 'Success', blogs: blogDocs})
     }
     catch(err) {
         console.log(err)
-        res.status(500).json({msg: 'Server Error'})
+        res.status(500).json({message: 'Server Error'})
     }
 })
 

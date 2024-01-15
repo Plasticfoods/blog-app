@@ -5,9 +5,9 @@ const blogSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    subtitle: {
+    summary: {
         type: String,
-        required: false
+        required: true
     },
     content: {
         type: String,
@@ -32,7 +32,7 @@ const blogSchema = new mongoose.Schema({
     },
     category: {
         type: String,
-        default: 'Sports'
+        default: 'Other'
     }
 })
 

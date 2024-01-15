@@ -34,6 +34,7 @@
     font-weight: 500; 
     font-family: source-serif-pro, Georgia, Cambria, "Times New Roman", Times, serif;
     font-family: sans-serif;
+    font-family: Roboto;
 }
 
 @media (min-width: 800px) {
@@ -56,7 +57,10 @@
     }
 
     .blog-content {
+        max-width: 710px;
         line-height: 32px;
         letter-spacing: -0.003em;
+        font-size: 1.3rem;
     }
+
 }

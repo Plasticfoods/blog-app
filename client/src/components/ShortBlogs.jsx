@@ -1,21 +1,21 @@
 import { Link } from "react-router-dom"
 import { useState, useEffect } from "react"
 import { base_url, api_url } from '../helper/variables.js'
+import getShortSummary from "../helper/getShortSummary.js"
+import createBlogUrl from "../helper/createBlogUrl.js"
 
-function getBlogUrl(title, blogId) {
-    title = title.toLowerCase()
-    let slug = title.split(' ').join('-')
 
-    if(slug.endsWith('.') || slug.endsWith('?') || slug.endsWith('/') || slug.endsWith(')')) {
-        slug = slug.slice(0, -1)
-    }
-    let path = slug + '-' + blogId
-    return base_url + 'posts/' + path
-}
+// function getBlogUrl(title, blogId) {
+//     title = title.toLowerCase()
+//     let slug = title.split(' ').join('-')
 
-function getShortContent(content) {
+//     if(slug.endsWith('.') || slug.endsWith('?') || slug.endsWith('/') || slug.endsWith(')')) {
+//         slug = slug.slice(0, -1)
+//     }
+//     let path = slug + '-' + blogId
+//     return base_url + 'posts/' + path
+// }
 
-}
 
 function extractDate(dateString) {
     const date = new Date(dateString)
@@ -64,11 +64,11 @@ export default function ShortBlogs() {
                             <Link className="short-blog-author-name link" to={`${base_url}${element.username}`}>
                                 {element.username}
                             </Link>
-                            <Link className="short-blog-title link" to={getBlogUrl(element.title, element._id)}>
+                            <Link className="short-blog-title link" to={createBlogUrl(element.title, element._id)}>
                                 {element.title}
                             </Link>
                             <div className="short-blog-content">
-                                {`${element.content.substring(0,120)}...`}
+                                { getShortSummary(element.summary) }
                             </div>
                             <div className="short-blog-details">
                                 <p className="date"> {extractDate(element.uploadDate)} </p>
