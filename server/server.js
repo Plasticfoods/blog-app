@@ -21,7 +21,8 @@ const userRouter = require('./routes/user')
 // Set CORS headers
 app.use(cors({
     credentials: true,
-    origin: clientUrl
+    origin: clientUrl,
+    // allowedHeaders: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS']
 }))
 
 // Allow credentials and specific origin

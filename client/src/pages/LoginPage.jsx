@@ -4,7 +4,7 @@ import { InputAdornment, IconButton, TextField, Button } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBlog } from '@fortawesome/free-solid-svg-icons'
-import {base_url, api_url} from '../helper/variables.js'
+import { base_url, api_url } from '../helper/variables.js'
 
 
 export default function Login() {
@@ -20,10 +20,10 @@ export default function Login() {
         event.preventDefault();
     };
 
-    const [userDetails, setUserDetails] = useState({email: '', password: ''})
+    const [userDetails, setUserDetails] = useState({ email: '', password: '' })
 
     function handleChange(e) {
-        const {id, value} = e.target
+        const { id, value } = e.target
         setUserDetails({
             ...userDetails,
             [id]: value
@@ -33,18 +33,24 @@ export default function Login() {
     async function login(e) {
         e.preventDefault()
         try {
-            const response  = await fetch(`${api_url}auth/login`, {
+            const response = await fetch(`${api_url}auth/login`, {
                 method: 'POST',
                 body: JSON.stringify(userDetails),
                 headers: {
-                    "Content-type": "application/json",
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                    'Access-Control-Allow-Origin': api_url
                 },
+                // headers: {
+                //     "Content-type": "application/json",
+                // },
                 // necessary to store access token in browser
                 withCredentials: true,
                 credentials: 'include',
+                crossDomain: true,
             })
             console.log(response)
-            if(response.status != 200) {
+            if (response.status != 200) {
                 alert('Error')
                 return
             }
@@ -52,7 +58,7 @@ export default function Login() {
             console.log('logged in');
             navigate('/')
         }
-        catch(err) {
+        catch (err) {
             console.log(err)
             alert('Server Error')
         }
@@ -101,7 +107,7 @@ export default function Login() {
                         value={userDetails.password}
                         onChange={handleChange}
                     />
-                    <Button fullWidth variant="contained" 
+                    <Button fullWidth variant="contained"
                         style={{
                             backgroundColor: '#1565c0',
                             color: 'white',
