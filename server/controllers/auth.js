@@ -123,6 +123,7 @@ async function logout(req, res) {
         // update the token array in user document
         await User.findByIdAndUpdate(req.userDoc._id, { tokens: updatedTokens });
 
+        console.log('Token', req.token)
         res.clearCookie("access_token");
         console.log("logged out");
         res.status(200).json({ message: "Logged out." });
