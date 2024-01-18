@@ -107,6 +107,7 @@ async function login(req, res) {
 }
 
 async function logout(req, res) {
+    console.log('Logout Endpoint')
     try {
         if (!req.token) {
             res.status(401).json({ message: "Unauthorized" });
@@ -124,7 +125,12 @@ async function logout(req, res) {
         await User.findByIdAndUpdate(req.userDoc._id, { tokens: updatedTokens });
 
         console.log('Token', req.token)
-        res.clearCookie("access_token");
+        res.clearCookie("access_token", {
+            httpOnly: true,
+            sameSite: 'none',
+            secure: true,
+        });
+
         console.log("logged out");
         res.status(200).json({ message: "Logged out." });
     } catch (err) {
