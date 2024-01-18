@@ -18,19 +18,37 @@ const postRouter = require('./routes/post')
 const userRouter = require('./routes/user')
 
 
-// Set CORS headers
-app.use(cors({
-    credentials: true,
-    origin: clientUrl,
-    // allowedHeaders: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS']
-}))
+// var whitelist = ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3002', 'http://localhost:8080', 'http://localhost:8000']; //white list consumers
+// var corsOptions = {
+//     origin: function (origin, callback) {
+//         if (whitelist.indexOf(origin) !== -1) {
+//             callback(null, true);
+//         } else {
+//             callback(null, false);
+//         }
+//     },
+//     methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
+//     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+//     credentials: true, //Credentials are cookies, authorization headers or TLS client certificates.
+//     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'device-remember-token', 'Access-Control-Allow-Origin', 'Origin', 'Accept']
+// };
 
-// Allow credentials and specific origin
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Credentials', 'true')
-    res.header('Access-Control-Allow-Origin', clientUrl)
-    next()
-})
+app.use(cors({ origin: '*' }))
+
+
+// Set CORS headers
+// app.use(cors({
+//     credentials: true,
+//     origin: clientUrl,
+//     // allowedHeaders: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS']
+// }))
+
+// // Allow credentials and specific origin
+// app.use((req, res, next) => {
+//     res.header('Access-Control-Allow-Credentials', 'true')
+//     res.header('Access-Control-Allow-Origin', '*')
+//     next()
+// })
 
 app.use(express.json())
 app.use(cookieParser())
@@ -47,8 +65,8 @@ cloudinary.config({
 })
 
 mongoose.connect(process.env.DATABASE_URL, {
-        useNewUrlParser: true, useUnifiedTopology: true
-    }
+    useNewUrlParser: true, useUnifiedTopology: true
+}
 )
     .then(() => console.log('Database connection successfull'))
     .catch((err) => console.log('error in db connection', err))
