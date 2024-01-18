@@ -18,7 +18,7 @@ const postRouter = require('./routes/post')
 const userRouter = require('./routes/user')
 
 
-const whitelist = ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3002', 'http://localhost:8080', 'http://localhost:8000']; //white list consumers
+const whitelist = ['http://localhost:3000', 'https://medium5.vercel.app/', 'http://localhost:3001', 'http://localhost:3002', 'http://localhost:8080', 'http://localhost:8000']; //white list consumers
 const corsOptions = {
     origin: function (origin, callback) {
         if (whitelist.indexOf(origin) !== -1) {
