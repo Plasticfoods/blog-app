@@ -43,6 +43,7 @@ export default function Login() {
                 withCredentials: true,
                 credentials: 'include',
             })
+            console.log(response)
             if(response.status != 200) {
                 alert('Error')
                 return

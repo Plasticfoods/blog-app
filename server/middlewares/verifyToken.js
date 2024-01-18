@@ -8,7 +8,6 @@ module.exports = async function(req, res, next) {
 
     if(!token) {
         req.token = null
-        console.log('Token is not present.')
         return next()
     }
 

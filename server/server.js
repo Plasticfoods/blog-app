@@ -1,10 +1,10 @@
 require('dotenv').config()
 const express = require('express')
-const app = express();
 const mongoose = require('mongoose')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const cloudinary = require('cloudinary').v2
+const app = express();
 
 const PORT = process.env.PORT || 7000
 const clientUrl = process.env.CLIENT_URL
@@ -16,6 +16,7 @@ const indexRouter = require('./routes/index')
 const authRouter = require('./routes/auth')
 const postRouter = require('./routes/post')
 const userRouter = require('./routes/user')
+
 
 // Set CORS headers
 app.use(cors({
