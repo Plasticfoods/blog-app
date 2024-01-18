@@ -94,7 +94,7 @@ async function login(req, res) {
             maxAge: 840000, // 14 minutes
             httpOnly: true,
             sameSite: 'none',
-            secure: false,
+            secure: true,
         });
         // res.cookie('uid', userDoc._id, { httpOnly: false })
         res.status(200).json({ message: "logged in", token: newToken.token });
