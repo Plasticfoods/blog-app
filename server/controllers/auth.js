@@ -93,6 +93,7 @@ async function login(req, res) {
         res.cookie("access_token", token, {
             maxAge: 840000, // 14 minutes
             httpOnly: true,
+            // for https sites only
             sameSite: 'none',
             secure: true,
         });

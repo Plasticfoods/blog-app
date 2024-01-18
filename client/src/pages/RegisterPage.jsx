@@ -51,7 +51,7 @@ export default function RegisterPage() {
         })
         .then(data => {
             if(data.success) {
-                alert(data.msg)
+                alert(data.message)
                 navigate('/auth/login')
                 return
             }

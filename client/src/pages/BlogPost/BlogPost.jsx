@@ -72,7 +72,7 @@ export default function BlogPost() {
                     <img src={blogData.imageUrl} className="blog-image" alt="blog image" />
                 </picture>
                 <div className="blog-content">
-                    <div dangerouslySetInnerHTML= { {__html: html}}></div>
+                    <div dangerouslySetInnerHTML={ {__html: html}}></div>
                 </div>
             </section>)
         }
