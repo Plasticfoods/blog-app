@@ -66,10 +66,9 @@ cloudinary.config({
 
 mongoose.connect(process.env.DATABASE_URL, {
     useNewUrlParser: true, useUnifiedTopology: true
-}
-)
-    .then(() => console.log('Database connection successfull'))
-    .catch((err) => console.log('error in db connection', err))
+})
+.then(() => console.log('Database connection successfull'))
+.catch((err) => console.log('error in db connection', err))
 
 
 app.listen(7000, () => { console.log(`Server running on port ${PORT}`) })
