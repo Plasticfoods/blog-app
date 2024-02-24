@@ -89,10 +89,31 @@ h6 {
   isolation: isolate;
 }
 
-:root {
-  desktop-padding: 10%;
+/* Loading Screen  */
+.loading-screen {
+  height: 100%;
+  z-index: 99;
+  /* background-color: #eee; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+main .loading-screen, .error-screen {
+  grid-row: 1/2;
+}
+
+.error-screen {
+  height: 100%;
+  z-index: 99;
+  /* background-color: #eee; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  color: gray;
+  font-size: 2rem;
+}
 
 .desktop-padding {
   padding-left: 10%;
@@ -221,7 +242,7 @@ h6 {
   align-items: center;
   position: sticky;
   top: 0;
-  z-index: 999;
+  z-index: 90;
 }
 
 .logo {
