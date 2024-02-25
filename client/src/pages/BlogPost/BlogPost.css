@@ -1,3 +1,8 @@
+.blog-post {
+    min-height: 70dvh;
+    display: grid;
+    grid-template-rows: auto 1fr;
+}
 
 .blog-content * {
     all: revert;

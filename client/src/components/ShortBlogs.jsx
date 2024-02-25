@@ -22,14 +22,13 @@ function extractDate(dateString) {
 export default function ShortBlogs() {
     const [blogs, setBlogs] = useState([])
     const [loading, setLoading] = useState(false)
-    const [error, setError] = useState('Something Went Wrong')
+    const [error, setError] = useState(null)
 
     useEffect(() => {
         const fetchBlogsData = async() => {
             setLoading(true)
             try {
                 const response = await axios.get(`${api_url}posts`)
-                console.log('Short Blogs', response.data)
                 setBlogs(response.data)
             } catch (err) {
                 if (err.response) {
