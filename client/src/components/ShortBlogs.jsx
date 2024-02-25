@@ -3,18 +3,9 @@ import { useState, useEffect } from "react"
 import { base_url, api_url } from '../helper/variables.js'
 import getShortSummary from "../helper/getShortSummary.js"
 import createBlogUrl from "../helper/createBlogUrl.js"
-
-
-// function getBlogUrl(title, blogId) {
-//     title = title.toLowerCase()
-//     let slug = title.split(' ').join('-')
-
-//     if(slug.endsWith('.') || slug.endsWith('?') || slug.endsWith('/') || slug.endsWith(')')) {
-//         slug = slug.slice(0, -1)
-//     }
-//     let path = slug + '-' + blogId
-//     return base_url + 'posts/' + path
-// }
+import axios from 'axios'
+import LoadingScreen from "./LoadingScreen.jsx"
+import ErrorScreen from './ErrorScreen.jsx'
 
 
 function extractDate(dateString) {
@@ -29,30 +20,46 @@ function extractDate(dateString) {
 
 
 export default function ShortBlogs() {
-
     const [blogs, setBlogs] = useState([])
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState(null)
 
     useEffect(() => {
-        const fetchBlogsData = async () => {
+        const fetchBlogsData = async() => {
+            setLoading(true)
             try {
-                const response = await fetch(`${api_url}posts`, {
-                    method: 'GET'
-                })
-                const data = await response.json()
-                if(!response.ok) {
-                    alert(data.message)
-                    return
+                const response = await axios.get(`${api_url}posts`)
+                setBlogs(response.data)
+            } catch (err) {
+                if (err.response) {
+                    // The client was given an error response (5xx, 4xx)
+                    const responseData = err.response.data
+                    setError(responseData.message)
+                } else if (err.request) {
+                    // The client never received a response, and the request was never left
+                    console.log(err)
+                    setError(err.message)
+                } else {
+                    // Anything else
+                    setError('Something Went Wrong')
                 }
-                setBlogs(data)
-            }
-            catch(err) {
-                console.log(err)
-                alert('Server Error')
+            } finally {
+                setLoading(false)
             }
         }
+
         fetchBlogsData()
     }, [])
 
+    if(loading) {
+        return <LoadingScreen />
+    }
+
+    if(error !== null) {
+        return <ErrorScreen errorMessage={error} />
+    }
+
+    // return <LoadingScreen />
 
     return (
         <section className="short-blogs">
