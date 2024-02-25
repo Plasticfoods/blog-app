@@ -4,7 +4,6 @@ import { Link, useParams, useNavigate } from "react-router-dom"
 import { base_url, api_url } from "../../helper/variables"
 import { useEffect, useState } from "react"
 import LoadingContainer from "../../components/LoadingContainer"
-import ErrorScreen from "../../components/ErrorScreen"
 import axios from "axios"
 
 
