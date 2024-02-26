@@ -8,7 +8,9 @@ const defaultBlogImage = 'https://res.cloudinary.com/dq6drt1el/image/upload/v169
 const getBlogs = async (req, res) => {
     try {
         const blogDocs = await Blog.find();
-        res.status(200).json(blogDocs);
+        setTimeout(() => {
+            res.status(200).json(blogDocs);
+        }, 4000);
     } 
     catch (err) {
         console.log(err);

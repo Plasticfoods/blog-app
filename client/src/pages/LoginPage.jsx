@@ -1,15 +1,16 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { InputAdornment, IconButton, TextField, Button } from '@mui/material';
+import { InputAdornment, IconButton, TextField, Button, CircularProgress } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBlog } from '@fortawesome/free-solid-svg-icons'
+import { faBlog, faL } from '@fortawesome/free-solid-svg-icons'
 import { base_url, api_url } from '../helper/variables.js'
-
+// import CircularProgress from '@mui/material/CircularProgress';
 
 export default function Login() {
 
     const [showPassword, setShowPassword] = useState(false);
+    const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
 
     const handleClickShowPassword = () => {
@@ -31,7 +32,7 @@ export default function Login() {
     }
 
     async function login(e) {
-        e.preventDefault()
+        setLoading(true)
         try {
             const response = await fetch(`${api_url}auth/login`, {
                 method: 'POST',
@@ -49,18 +50,21 @@ export default function Login() {
                 credentials: 'include',
                 crossDomain: true,
             })
-            console.log(response)
+            console.log(response.status)
+            const resObject = await response.json();
             if (response.status != 200) {
-                alert('Error')
+                alert(resObject.message)
                 return
             }
-            // const resObject = await response.json();
             console.log('logged in');
             navigate('/')
         }
         catch (err) {
             console.log(err)
             alert('Server Error')
+        }
+        finally {
+            setLoading(false)
         }
     }
 
@@ -115,8 +119,10 @@ export default function Login() {
                             fontSize: '1.1rem',
                         }}
                         onClick={login}
+                        disabled={loading}
+                        type="button"
                     >
-                        Sign in
+                        {loading ? 'Loading...' : 'Sign in'}
                     </Button>
                 </form>
 

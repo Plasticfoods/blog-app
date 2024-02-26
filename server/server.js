@@ -7,7 +7,6 @@ const cloudinary = require('cloudinary').v2
 const app = express();
 
 const PORT = process.env.PORT || 7000
-const clientUrl = process.env.CLIENT_URL
 const cloud_name = process.env.CLOUDINARY_CLOUD_NAME
 const api_key = process.env.CLOUDINARY_API_KEY
 const api_secret = process.env.CLOUDINARY_API_SECRET
@@ -18,7 +17,7 @@ const postRouter = require('./routes/post')
 const userRouter = require('./routes/user')
 
 
-const whitelist = ['http://localhost:3000', 'https://medium5.vercel.app', 'http://localhost:3001', 'http://localhost:3002', 'http://localhost:8080', 'http://localhost:8000']; //white list consumers
+const whitelist = ['http://localhost:3000', 'https://medium5.vercel.app', 'http://localhost:3001', 'http://localhost:3002', 'http://localhost:5176', 'http://localhost:8000']; //white list consumers
 const corsOptions = {
     origin: function (origin, callback) {
         if (whitelist.indexOf(origin) !== -1) {
