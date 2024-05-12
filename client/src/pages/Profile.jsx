@@ -9,7 +9,7 @@ import { base_url, api_url } from '../helper/variables'
 const UserContext = createContext({}) 
 
 function Profile() {
-    const {username} = useParams()
+    const { username } = useParams()
     const navigate = useNavigate()
     const [userData, setUserData] = useState({})
     

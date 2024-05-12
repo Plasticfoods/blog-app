@@ -6,33 +6,31 @@ import { base_url, api_url } from '../helper/variables'
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export default function Header2(props) {
+export default function Header2({ user, loggedIn }) {
     
     const navigate = useNavigate()
-    const [username, setUsername] = useState('')
-    const [loggedIn, setLoggedIn] = useState(false)
     const createBlogUrl = `${base_url}create`
     
-    useEffect(() => {
-        fetch(`${api_url}myprofile`, {
-            method: 'GET',
-            withCredentials: true,
-            credentials: 'include'
-        })
-        .then(res => {
-            if(res.status === 404) {
-                navigate('*')
-                return null
-            }
-            return res.json()
-        })
-        .then(data => {
-            if(data === null) return
-            if(data.userData !== null) setUsername(data.userData.username)
-            setLoggedIn(data.loggedIn)
-        })
-        .catch(err => console.log(err))
-    }, [])
+    // useEffect(() => {
+    //     fetch(`${api_url}myprofile`, {
+    //         method: 'GET',
+    //         withCredentials: true,
+    //         credentials: 'include'
+    //     })
+    //     .then(res => {
+    //         if(res.status === 404) {
+    //             navigate('*')
+    //             return null
+    //         }
+    //         return res.json()
+    //     })
+    //     .then(data => {
+    //         if(data === null) return
+    //         if(data.userData !== null) setUsername(data.userData.username)
+    //         setLoggedIn(data.loggedIn)
+    //     })
+    //     .catch(err => console.log(err))
+    // }, [])
 
     function logout(e) {
         fetch(`${api_url}auth/logout`, {
@@ -65,7 +63,7 @@ export default function Header2(props) {
                             <FontAwesomeIcon icon={faPenToSquare} className='write-icon' />
                             <p>Write</p>
                         </Link>
-                        <Link className="profile-icon" to={`${base_url}${username}`}>
+                        <Link className="profile-icon" to={`${base_url}${user.username}`}>
                             <img src={profileIcon} alt="profile icon" />
                         </Link>
                     </>)

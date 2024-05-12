@@ -89,6 +89,17 @@ h6 {
   isolation: isolate;
 }
 
+/* Image Reset  */
+img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+  font-style: italic;
+  background-repeat: no-repeat;
+  background-size: cover;
+  shape-margin: .75rem;
+}
+
 /* Loading Screen  */
 .loading-screen {
   height: 100%;

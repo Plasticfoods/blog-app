@@ -1,0 +1,95 @@
+
+
+/* user details  */
+/* desktop styling  */
+.user-details {
+  width: 75%;
+  margin: 0 auto;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-name {
+  font-size: 3rem;
+  font-weight: 600;
+}
+
+.user-image {
+  width: 8rem;
+}
+
+.user-about {
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: #6b6b6b;
+}
+
+/* mobile styling  */
+@media (max-width: 800px) {
+  .user-details {
+    width: 100%;
+    padding-left: 4%;
+    padding-right: 4%;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+  .user-name {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+  .user-image {
+    width: 3rem;
+    display: flex;
+    align-items: start;
+    padding-top: 5px;
+  }
+  .user-about {
+    font-size: 1rem;
+  }
+}
+
+.gray-text {
+  color: #4f4f4f;
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+
+.edit-profile {
+  color: green;
+  padding-top: 0.4rem;
+  font-weight: 500;
+}
+
+/* Medium Blogs */
+.medium-blogs {
+  border-top: 1px solid #e0e0e0;
+
+  width: 80%;
+  margin-inline: auto;
+  padding-bottom: 2rem;
+}
+
+.medium-blogs .title {
+  font-size: 1.6rem;
+  font-weight: 500;
+  padding-bottom: 2rem;
+  padding-top: 2.2rem;
+}
+
+.auto-grid {
+  display: grid;
+  grid-template-columns: 
+    repeat(auto-fit, minmax(min(350px, 100%), 1fr));
+  gap: 5rem 2.7rem;
+}
+
+@media screen and (max-width: 800px) {
+  .medium-blogs {
+    width: 100%;
+    padding-left: 4%;
+    padding-right: 4%;
+  }
+}

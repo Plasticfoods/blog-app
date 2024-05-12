@@ -53,7 +53,6 @@ async function getUserPosts(req, res) {
 
 // returns users own data
 async function getMyProfile(req, res) {
-    console.log('index route')
     try {   
         if(!req.token) {
             return res.status(200).json({
