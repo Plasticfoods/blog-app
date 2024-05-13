@@ -1,51 +1,65 @@
-import { useState } from "react"
+import * as React from 'react';
+import { useState, useEffect } from "react"
 import { base_url, api_url } from '../helper/variables.js'
+import Typography from '@mui/material/Typography'
+import axios from 'axios'
+import EditProfile from '../components/EditProfile.jsx';
 
 export default function Test() {
-    const [file, setFile] = useState(null)
-    const [title, setTitle] = useState("")
-    const [content, setContent] = useState("")
-    const [category, setCategory] = useState("")
+    const [user, setUser] = useState(null)
 
-    async function handleCLick() {
-        const formData = new FormData()
-        formData.append('image', file)
-        formData.append('title', title)
-        formData.append('content', content)
-        formData.append('category', category)
-        // formData.append('username', 'john12')
+    useEffect(() => {
+        ;(async() => {
+            try {
+                const response = await axios.get(`${api_url}myprofile`, {
+                    withCredentials: true,
+                    credentials: 'include'
+                })
+                setUser(response.data.userData)
+            } catch (error) {
+                console.log(error)
+            }
+        })()
+    })
 
+    const updateUserInfo = async () => {
         try {
-            const response = await fetch(`${api_url}posts/`, {
-                method: 'POST',
-                body: formData,
-                // necessary to store access token in browser
+            const response = await axios.put(`${api_url}users/${user.username}`, {
+                ...user
+            }, {
                 withCredentials: true,
                 credentials: 'include'
             })
-
-            if(!response.ok) {
-                console.log('error')
-            }
-            console.log(await response.json())
-        }
-        catch(err) {
-            console.log(err)
+            console.log(response.data)
+            setUser(response.data.user)
+        } catch (error) {
+            console.log(error)
         }
     }
 
-    return <div className="test">
-        <h1>Test Page</h1>
-        <form>
-            Title: <input type="text" style={{border: '1px solid black', width: '100%', height: '50px'}} onChange={(e) => {setTitle(e.target.value)}} />
-            <br />
-            Content: <input type="text-area" style={{border: '1px solid black', width: '100%', height: '70px'}} onChange={(e) => {setContent(e.target.value)}} />
-            <br />
-            Category: <input type="text" style={{border: '1px solid black', width: '100%', height: '30px'}} onChange={e => setCategory(e.target.value)} />
-            <input type="file" onChange={(e) => { setFile(e.target.files[0]) }}/>
-            <br />
-            <button onClick={handleCLick} type='button'>upload</button>
-        </form>
+    if(!user) return (
+        <div>
+            Loading...
+        </div>
+    )
 
-    </div>
+    return (
+        <div className="test" style={{ padding: '2rem' }}>
+            <EditProfile user={user} updateUserInfo={updateUserInfo} />
+            <div style={{ marginTop: '2rem' }}>
+                <Typography variant="h5">
+                    User Info
+                </Typography>
+                <Typography variant="body1">
+                    Name: {user.name}
+                </Typography>
+                <Typography variant="body1">
+                    Username: {user.username}
+                </Typography>
+                <Typography variant="body1">
+                    Email: {user.email}
+                </Typography>
+            </div>
+        </div>
+    )
 }

@@ -51,4 +51,27 @@ router.get('/:username/posts', async (req, res) => {
 })
 
 
+// update user details
+router.put('/:username', verifyToken, async (req, res) => {
+    if(!req.token) {
+        return res.status(401).json({message: 'Unauthorized'})
+    }
+    const {name, email} = req.body
+    const username = req.params.username
+    const userDoc = req.userDoc
+    console.log('Edit user route', req.body, userDoc)
+    if(username !== userDoc.username) {
+        return res.status(401).json({message: 'Unauthorized'})
+    }
+    try {
+        const updatedUser = await User.findOneAndUpdate({_id: userDoc._id}, {name, email}, {new: true})
+        console.log('Updated user details', updatedUser)
+        res.status(200).json({message: 'User details updated successfully', user: updatedUser})
+    } catch(err) {
+        console.log('Error while updaing user details', err)
+        res.status(500).json({message: 'Server Error'})
+    }
+})
+
+
 module.exports = router

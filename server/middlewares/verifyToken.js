@@ -8,6 +8,7 @@ module.exports = async function(req, res, next) {
 
     if(!token) {
         req.token = null
+        console.log('Token not present')
         return next()
     }
 
@@ -24,7 +25,7 @@ module.exports = async function(req, res, next) {
             req.userDoc = userDoc
             req.token = decoded.sub
             req.userId = decoded.sub
-            console.log('token verified')
+            console.log('Token verified')
 
             next()
             return

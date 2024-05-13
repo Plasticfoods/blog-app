@@ -54,9 +54,6 @@ function Profile() {
                 credentials: 'include'
             })
             setProfile(response.data)
-            // if(user !== null) {
-            //     setIsCurrentUser(user._id === profile._id)
-            // }
         }
 
         async function getProfileBlogs() {
@@ -67,6 +64,24 @@ function Profile() {
             setBlogs(response.data.blogs)
         }
     }, [username])
+
+    const updateUserInfo = async (profileInfo) => {
+        try {
+            setLoading(true)
+            const response = await axios.put(`${api_url}users/${user.username}`, {
+                ...profileInfo
+            }, {
+                withCredentials: true,
+                credentials: 'include'
+            })
+            console.log('Updated data', response.data)
+            setProfile(response.data.user)
+        } catch (error) {
+            console.log(error)
+        } finally {
+            setLoading(false)
+        }
+    }
 
     if (error) return (
         <div>
@@ -79,10 +94,6 @@ function Profile() {
             <LoadingScreen />
         </div>
     )
-
-    if(user) {
-        console.log(username + ' and ' + user.username)
-    }
 
     return (
         <div className='profile'>
@@ -107,7 +118,7 @@ function Profile() {
                             </Backdrop>
                         </div> */}
                         {isCurrentUser && 
-                            <EditProfile />
+                            <EditProfile profile={profile} updateUserInfo={updateUserInfo} />
                         }
                     </div>
                     <picture className='user-image'>
