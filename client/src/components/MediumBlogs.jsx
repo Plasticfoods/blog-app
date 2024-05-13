@@ -14,7 +14,7 @@ import createBlogUrl from '../helper/createBlogUrl';
 import { Link } from 'react-router-dom';
 
 
-export default function MediumBlogs({ profile, blogs, loggedIn}) {
+export default function MediumBlogs({ profile, blogs, isCurrentUser}) {
     if (blogs.length === 0) {
         return (
             <div className="medium-blogs">
@@ -33,7 +33,7 @@ export default function MediumBlogs({ profile, blogs, loggedIn}) {
                         key={index}
                         blog={blog}
                         profile={profile}
-                        loggedIn={loggedIn}
+                        isCurrentUser={isCurrentUser}
                     />
                 })}
             </div>
@@ -71,7 +71,11 @@ export function MediumBlog({ blog, username }) {
     )
 }
 
-export function MediumBlog2({ blog, profile, loggedIn }) {
+export function MediumBlog2({ blog, profile, isCurrentUser }) {
+    let summary = ''
+    if(blog.summary && blog.summary.length > 70) {
+        summary = blog.summary.slice(0, 70) + '...'
+    }
 
     return (
         <Card className='medium-blog' sx={{ maxWidth: '400px' }}>
@@ -92,10 +96,10 @@ export function MediumBlog2({ blog, profile, loggedIn }) {
                     </Link>
                 </Typography>
                 <Typography variant="body" color="text.secondary" sx={{ fontWeight: 600, lineHeight: '2ch' }}>
-                    {blog.summary}
+                    {summary }
                 </Typography>
             </CardContent>
-            {loggedIn &&
+            {isCurrentUser &&
                 <CardActions sx={{ marginTop: '-10px' }}>
                     <Button color='error' sx={{ fontWeight: 600 }}>
                         Delete

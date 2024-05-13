@@ -16,6 +16,7 @@ function Profile() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [loggedIn, setLoggedIn] = useState(false);
+    const [isCurrentUser, setIsCurrentUser] = useState(false);
 
     useEffect(() => {
         setLoading(true)
@@ -47,6 +48,9 @@ function Profile() {
                 credentials: 'include'
             })
             setProfile(response.data)
+            if(user !== null) {
+                setIsCurrentUser(user._id === profile._id)
+            }
         }
 
         async function getProfileBlogs() {
@@ -57,9 +61,9 @@ function Profile() {
             console.log(response.data)
             setBlogs(response.data.blogs)
         }
-    }, [])
+    }, [username])
 
-    if (error !== null) return (
+    if (error) return (
         <div>
             <h1>{error}</h1>
         </div>
@@ -84,7 +88,7 @@ function Profile() {
                         </h2>
                         <p className='gray-text'>A Skeleton user</p>
                         <p className='gray-text'>@{profile.username}</p>
-                        {loggedIn && <Link className='edit-profile'>Edit Profile</Link>}
+                        {isCurrentUser && <Link className='edit-profile'>Edit Profile</Link>}
                     </div>
                     <picture className='user-image'>
                         <img src={profileIcon} alt="profile image" />
@@ -92,7 +96,7 @@ function Profile() {
                 </section>
             </div>
             {/* Blogs */}
-            <MediumBlogs loggedIn={loggedIn} blogs={blogs} profile={profile} />
+            <MediumBlogs isCurrentUser={isCurrentUser} blogs={blogs} profile={profile} />
 
         </div>
     );

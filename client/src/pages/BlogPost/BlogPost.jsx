@@ -30,65 +30,43 @@ export default function BlogPost() {
     const [html, setHtml] = useState('')
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
+    const [user, setUser] = useState(null)
+    const [loggedIn, setLoggedIn] = useState(false)
 
     useEffect(() => {
-        const fetchBlogData = async () => {
-            setLoading(true)
+        ;(async () => {
             try {
-                const response = await axios.get(`${api_url}posts/${postId}`)
-                console.log(response)
-                setBlogData(response.data)
-                setHtml(response.data.content)
+                setLoading(true)
+                await getUserData()
+                await fetchBlogData()
             } catch (err) {
-                if (err.response) {
-                    // The client was given an error response (5xx, 4xx)
-                    const responseData = err.response.data
-                    console.log(responseData)
-                    setError(responseData.message)
-                } else if (err.request) {
-                    // The client never received a response, and the request was never left
-                    console.log(err)
-                    setError(err.message)
-                } else {
-                    // Anything else
-                    console.log(err)
-                    setError('Something Went Wrong')
-                }
+                console.log(err)
+                setError(err.message)
             } finally {
                 setLoading(false)
             }
+        })()
+
+        async function fetchBlogData() {
+            const response = await axios.get(`${api_url}posts/${postId}`)
+            setBlogData(response.data)
+            setHtml(response.data.content)
         }
 
-        fetchBlogData()
-        // fetch(`${api_url}posts/${postId}`, {
-        //     method: 'GET'
-        // })
-        // .then(res => {
-        //     if(res.status === 404) {
-        //         navigate('*')
-        //         return null
-        //     }
-        //     if(res.status === 500) {
-        //         navigate('/error/500')
-        //         return null
-        //     }
-        //     return res.json()
-        // })
-        // .then(data => {
-        //     if(data !== null) {
-        //         setBlogData(data)
-        //         setHtml(data.content)
-        //     }
-        // })
-        // .catch(err => {
-        //     console.log(err)
-        // }) 
+        async function getUserData() {
+            const response = await axios.get(`${api_url}myprofile`, {
+                withCredentials: true,
+                credentials: 'include'
+            })
+            setUser(response.data.userData)
+            setLoggedIn(response.data.loggedIn)
+        }
     }, [])
 
     if (blogData === null) {
         return (
             <article className="blog-post">
-                <Header2 />
+                <Header2 user={user} loggedIn={loggedIn} />
                 <LoadingContainer />
             </article>
         )
@@ -97,7 +75,7 @@ export default function BlogPost() {
     if (error !== null) {
         return (
             <article className="blog-post">
-                <Header2 />
+                <Header2 user={user} loggedIn={loggedIn} />
                 <div className="error-container">
                     <div>{error}</div>
                 </div>
@@ -108,7 +86,7 @@ export default function BlogPost() {
     console.log(blogData)
 
     return <article className="blog-post">
-        <Header2 />
+        <Header2 user={user} loggedIn={loggedIn} />
         <section className="blog-area">
             <h1 className="blog-title">{blogData.title}</h1>
             <div className="blog-detail">

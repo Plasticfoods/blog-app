@@ -12,6 +12,7 @@ import Page500 from './pages/ServerError'
 
 
 function App() {
+
   return (
     <Routes>
       <Route exact path="/" element={<Home />} />
