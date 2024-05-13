@@ -7,6 +7,9 @@ import profileIcon from '../../images/user-profile-icon.svg';
 import MediumBlogs from '../../components/MediumBlogs';
 import { api_url, base_url } from '../../helper/variables';
 import axios from 'axios';
+import { CircularProgress, Backdrop } from '@mui/material';
+import EditProfile from '../../components/EditProfile';
+
 
 function Profile() {
     const { username } = useParams();
@@ -19,15 +22,12 @@ function Profile() {
     const [isCurrentUser, setIsCurrentUser] = useState(false);
 
     useEffect(() => {
-        ;(async function () {
+        ; (async function () {
             try {
                 setLoading(true)
                 await getUserData()
                 await getProfileData()
                 await getProfileBlogs()
-                if(user !== null) {
-                    setIsCurrentUser(user.username === username)
-                }
             } catch (err) {
                 console.log(err)
                 setError(err.message)
@@ -43,6 +43,9 @@ function Profile() {
             })
             setUser(response.data.userData)
             setLoggedIn(response.data.loggedIn)
+            if(response.data.loggedIn) {
+                setIsCurrentUser(response.data.userData.username === username)
+            }
         }
 
         async function getProfileData() {
@@ -77,6 +80,9 @@ function Profile() {
         </div>
     )
 
+    if(user) {
+        console.log(username + ' and ' + user.username)
+    }
 
     return (
         <div className='profile'>
@@ -90,7 +96,19 @@ function Profile() {
                         </h2>
                         <p className='gray-text'>A Skeleton user</p>
                         <p className='gray-text'>@{profile.username}</p>
-                        {isCurrentUser && <Link className='edit-profile'>Edit Profile</Link>}
+                        {/* <div>
+                            <Link className='edit-profile' onClick={() => setOpen(true)} >Edit Profile</Link>
+                            <Backdrop
+                                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                                open={open}
+                                onClick={handleClose}
+                            >
+                                <CircularProgress color="inherit" />
+                            </Backdrop>
+                        </div> */}
+                        {isCurrentUser && 
+                            <EditProfile />
+                        }
                     </div>
                     <picture className='user-image'>
                         <img src={profileIcon} alt="profile image" />
@@ -99,7 +117,6 @@ function Profile() {
             </div>
             {/* Blogs */}
             <MediumBlogs isCurrentUser={isCurrentUser} blogs={blogs} profile={profile} />
-
         </div>
     );
 }
