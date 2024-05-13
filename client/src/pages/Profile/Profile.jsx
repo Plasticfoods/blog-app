@@ -19,12 +19,15 @@ function Profile() {
     const [isCurrentUser, setIsCurrentUser] = useState(false);
 
     useEffect(() => {
-        setLoading(true)
         ;(async function () {
             try {
+                setLoading(true)
                 await getUserData()
                 await getProfileData()
                 await getProfileBlogs()
+                if(user !== null) {
+                    setIsCurrentUser(user.username === username)
+                }
             } catch (err) {
                 console.log(err)
                 setError(err.message)
@@ -48,9 +51,9 @@ function Profile() {
                 credentials: 'include'
             })
             setProfile(response.data)
-            if(user !== null) {
-                setIsCurrentUser(user._id === profile._id)
-            }
+            // if(user !== null) {
+            //     setIsCurrentUser(user._id === profile._id)
+            // }
         }
 
         async function getProfileBlogs() {
@@ -58,7 +61,6 @@ function Profile() {
                 withCredentials: true,
                 credentials: 'include'
             })
-            console.log(response.data)
             setBlogs(response.data.blogs)
         }
     }, [username])

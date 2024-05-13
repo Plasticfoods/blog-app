@@ -15,6 +15,8 @@ import { Link } from 'react-router-dom';
 
 
 export default function MediumBlogs({ profile, blogs, isCurrentUser}) {
+    console.log('Is current User', isCurrentUser)
+
     if (blogs.length === 0) {
         return (
             <div className="medium-blogs">

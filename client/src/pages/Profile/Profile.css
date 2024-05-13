@@ -65,8 +65,7 @@
 
 /* Medium Blogs */
 .medium-blogs {
-  border-top: 1px solid #e0e0e0;
-
+  /* border-top: 1px solid #e0e0e0; */
   width: 80%;
   margin-inline: auto;
   padding-bottom: 2rem;
@@ -76,7 +75,7 @@
   font-size: 1.6rem;
   font-weight: 500;
   padding-bottom: 2rem;
-  padding-top: 2.2rem;
+  padding-top: 1rem;
 }
 
 .auto-grid {
