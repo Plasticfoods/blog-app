@@ -4,6 +4,8 @@ const multer = require('multer');
 const upload = multer({ dest: 'uploads/' }); // Destination folder for uploaded files
 const verifyToken = require('../middlewares/verifyToken')
 const blogController = require('../controllers/blog')
+const User = require('../models/User')
+const Blog = require('../models/Blog')
 
 
 // get all blog posts
@@ -42,8 +44,8 @@ router.delete("/:postId", verifyToken, async (req, res) => {
         );
     
         // deleting a blog from Blog 
-        const deletedPost = await Blog.deleteOne({ _id: req.params.postId })
-        res.status(200).json({ message: 'Blog deleted' })
+        const deletedPost = await Blog.deleteOne({ _id: req.params.postId }, { new: true })
+        res.status(200).json({ message: 'Blog deleted', deletedPost })
     }
     catch(err) {
         console.log(err)

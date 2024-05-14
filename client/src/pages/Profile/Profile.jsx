@@ -83,6 +83,28 @@ function Profile() {
         }
     }
 
+    const deleteBlog = async (blogId) => {
+        try {
+            setLoading(true)
+            let response = await axios.delete(`${api_url}posts/${blogId}`, {
+                withCredentials: true,
+                credentials: 'include'
+            })
+            response = await axios.get(`${api_url}users/${username}/posts`, {
+                withCredentials: true,
+                credentials: 'include'
+            })
+            setBlogs(response.data.blogs)
+            alert('Blog deleted')
+        } catch(err) {  
+            console.log(err)
+            setError(err.message)
+        } finally {
+            setLoading(false)
+        }
+    }
+
+
     if (error) return (
         <div>
             <h1>{error}</h1>
@@ -107,16 +129,6 @@ function Profile() {
                         </h2>
                         <p className='gray-text'>A Skeleton user</p>
                         <p className='gray-text'>@{profile.username}</p>
-                        {/* <div>
-                            <Link className='edit-profile' onClick={() => setOpen(true)} >Edit Profile</Link>
-                            <Backdrop
-                                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-                                open={open}
-                                onClick={handleClose}
-                            >
-                                <CircularProgress color="inherit" />
-                            </Backdrop>
-                        </div> */}
                         {isCurrentUser && 
                             <EditProfile profile={profile} updateUserInfo={updateUserInfo} />
                         }
@@ -127,7 +139,7 @@ function Profile() {
                 </section>
             </div>
             {/* Blogs */}
-            <MediumBlogs isCurrentUser={isCurrentUser} blogs={blogs} profile={profile} />
+            <MediumBlogs isCurrentUser={isCurrentUser} blogs={blogs} profile={profile} deleteBlog={deleteBlog} />
         </div>
     );
 }

@@ -14,7 +14,7 @@ import createBlogUrl from '../helper/createBlogUrl';
 import { Link } from 'react-router-dom';
 
 
-export default function MediumBlogs({ profile, blogs, isCurrentUser}) {
+export default function MediumBlogs({ profile, blogs, isCurrentUser, deleteBlog }) {
 
     if (blogs.length === 0) {
         return (
@@ -35,6 +35,7 @@ export default function MediumBlogs({ profile, blogs, isCurrentUser}) {
                         blog={blog}
                         profile={profile}
                         isCurrentUser={isCurrentUser}
+                        deleteBlog={deleteBlog}
                     />
                 })}
             </div>
@@ -72,7 +73,7 @@ export function MediumBlog({ blog, username }) {
     )
 }
 
-export function MediumBlog2({ blog, profile, isCurrentUser }) {
+export function MediumBlog2({ blog, profile, isCurrentUser, deleteBlog }) {
     let summary = ''
     if(blog.summary && blog.summary.length > 70) {
         summary = blog.summary.slice(0, 70) + '...'
@@ -101,7 +102,10 @@ export function MediumBlog2({ blog, profile, isCurrentUser }) {
                 </Typography>
                 <div className="card-actions pt-4">
                 {isCurrentUser &&
-                    <Button color='error' variant='outlined'  sx={{ fontWeight: 500, borderRadius: '20px' }}>
+                    <Button color='error' variant='outlined'  
+                        sx={{ fontWeight: 500, borderRadius: '20px' }}
+                        onClick={() => deleteBlog(blog._id)}
+                    >
                         Delete
                     </Button>
                 }
