@@ -99,13 +99,15 @@ export function MediumBlog2({ blog, profile, isCurrentUser }) {
                 <Typography variant="body" color="text.secondary" sx={{ fontWeight: 600, lineHeight: '2ch' }}>
                     {summary }
                 </Typography>
-            </CardContent>
-            {isCurrentUser &&
-                <CardActions sx={{ marginTop: '-10px' }}>
-                    <Button color='error' sx={{ fontWeight: 600 }}>
+                <div className="card-actions pt-4">
+                {isCurrentUser &&
+                    <Button color='error' variant='outlined'  sx={{ fontWeight: 500, borderRadius: '20px' }}>
                         Delete
                     </Button>
-                </CardActions>}
+                }
+                </div>
+            </CardContent>
+            
         </Card>
     )
 }
