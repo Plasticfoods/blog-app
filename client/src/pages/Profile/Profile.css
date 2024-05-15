@@ -81,7 +81,7 @@
 .auto-grid {
   display: grid;
   grid-template-columns: 
-    repeat(auto-fit, minmax(min(350px, 100%), 1fr));
+    repeat(auto-fill, minmax(min(350px, 100%), 1fr));
   gap: 5rem 2.7rem;
 }
 

@@ -74,10 +74,15 @@ export function MediumBlog({ blog, username }) {
 }
 
 export function MediumBlog2({ blog, profile, isCurrentUser, deleteBlog }) {
-    let summary = ''
-    if(blog.summary && blog.summary.length > 70) {
-        summary = blog.summary.slice(0, 70) + '...'
+    let summary = '';
+    if (blog.summary && blog.summary.length > 70) {
+        summary = blog.summary.substring(0, 70) + '...';
+    } else {
+        summary = blog.summary; // Assign the original summary if it is less than or equal to 70 characters
     }
+
+
+    console.log('Summary: ', blog.summary, summary)
 
     return (
         <Card className='medium-blog' sx={{ maxWidth: '400px' }}>
@@ -98,20 +103,20 @@ export function MediumBlog2({ blog, profile, isCurrentUser, deleteBlog }) {
                     </Link>
                 </Typography>
                 <Typography variant="body" color="text.secondary" sx={{ fontWeight: 600, lineHeight: '2ch' }}>
-                    {summary }
+                    {summary}
                 </Typography>
                 <div className="card-actions pt-4">
-                {isCurrentUser &&
-                    <Button color='error' variant='outlined'  
-                        sx={{ fontWeight: 500, borderRadius: '20px' }}
-                        onClick={() => deleteBlog(blog._id)}
-                    >
-                        Delete
-                    </Button>
-                }
+                    {isCurrentUser &&
+                        <Button color='error' variant='outlined'
+                            sx={{ fontWeight: 500, borderRadius: '20px' }}
+                            onClick={() => deleteBlog(blog._id)}
+                        >
+                            Delete
+                        </Button>
+                    }
                 </div>
             </CardContent>
-            
+
         </Card>
     )
 }

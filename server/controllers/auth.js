@@ -8,12 +8,12 @@ async function register(req, res) {
 
     try {
         let userDoc = await User.findOne({ email });
-        if (userDoc) {
-            res
-                .status(409)
-                .json({ message: "Email address in use", key: "email", success: false });
-            return;
-        }
+        // if (userDoc) {
+        //     res
+        //         .status(409)
+        //         .json({ message: "Email address in use", key: "email", success: false });
+        //     return;
+        // }
         userDoc = await User.findOne({ username });
         if (userDoc) {
             res
@@ -34,11 +34,12 @@ async function register(req, res) {
             password: hashedPassword,
         });
         await newUser.save();
-        console.log("registration successfull");
+        console.log("Registration successfull");
 
-        res.status(200).send({ message: "User registration successfull", success: true });
+        res.status(200).json({ message: "User registration successfull", success: true });
     } catch (err) {
         console.log(err.message);
+        res.status(500).json({ message: "Server Error", success: false });
     }
 }
 
@@ -91,7 +92,7 @@ async function login(req, res) {
 
         // set JWT in cookie
         res.cookie("access_token", token, {
-            maxAge: 840000, // 14 minutes
+            maxAge: expiryTime, // 14 minutes
             httpOnly: true,
             // for https sites only
             sameSite: 'none',

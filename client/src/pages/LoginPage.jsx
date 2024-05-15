@@ -5,7 +5,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBlog, faL } from '@fortawesome/free-solid-svg-icons'
 import { base_url, api_url } from '../helper/variables.js'
-// import CircularProgress from '@mui/material/CircularProgress';
+
 
 export default function Login() {
 
@@ -42,9 +42,6 @@ export default function Login() {
                     Accept: 'application/json',
                     'Access-Control-Allow-Origin': api_url
                 },
-                // headers: {
-                //     "Content-type": "application/json",
-                // },
                 // necessary to store access token in browser
                 withCredentials: true,
                 credentials: 'include',
@@ -83,7 +80,7 @@ export default function Login() {
                         fullWidth
                         size='small'
                         variant="outlined"
-                        label="email"
+                        label="Email"
                         id="email"
                         value={userDetails.email}
                         onChange={handleChange}
@@ -112,17 +109,17 @@ export default function Login() {
                         onChange={handleChange}
                     />
                     <Button fullWidth variant="contained"
-                        style={{
-                            backgroundColor: '#1565c0',
-                            color: 'white',
-                            textTransform: 'none',
-                            fontSize: '1.1rem',
-                        }}
+                        // style={{
+                        //     backgroundColor: '#1565c0',
+                        //     color: 'white',
+                        //     textTransform: 'none',
+                        //     fontSize: '1.1rem',
+                        // }}
                         onClick={login}
                         disabled={loading}
                         type="button"
                     >
-                        {loading ? 'Loading...' : 'Sign in'}
+                        {loading ? <CircularProgress size={35} /> : 'Sign in'}
                     </Button>
                 </form>
 

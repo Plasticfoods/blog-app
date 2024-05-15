@@ -1,5 +1,5 @@
 import './Profile.css';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import LoadingScreen from '../../components/LoadingScreen';
 import Header2 from '../../components/Header2';
@@ -7,7 +7,7 @@ import profileIcon from '../../images/user-profile-icon.svg';
 import MediumBlogs from '../../components/MediumBlogs';
 import { api_url, base_url } from '../../helper/variables';
 import axios from 'axios';
-import { CircularProgress, Backdrop } from '@mui/material';
+// import { CircularProgress, Backdrop } from '@mui/material';
 import EditProfile from '../../components/EditProfile';
 
 
@@ -78,6 +78,7 @@ function Profile() {
             setProfile(response.data.user)
         } catch (error) {
             console.log(error)
+            setError(error.message)
         } finally {
             setLoading(false)
         }

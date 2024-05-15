@@ -479,7 +479,8 @@ main {
 .short-blog-title {
   font-weight: 700;
   line-height: 2ch;
-  word-break: break-all;
+  /* Short blog title word-break */
+  /* word-break: break-all; */
 }
 
 @media (max-width: 800px) {

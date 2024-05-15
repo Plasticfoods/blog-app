@@ -1,5 +1,5 @@
 import Header2 from "../../components/Header2"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Editor from "../../components/Editor";
 import './CreateBlog.css'
 import categories from "../../helper/categories";
@@ -7,17 +7,44 @@ import { base_url, api_url } from '../../helper/variables'
 import { useNavigate } from "react-router-dom";
 import createBlogUrl from "../../helper/createBlogUrl";
 import DOMPurify from 'dompurify';
+import LoadingScreen from "../../components/LoadingScreen";
+import axios from "axios";
+import { CircularProgress, Typography } from "@mui/material";
 
 
 function CreateBlog() {
     const navigate = useNavigate()
     const maxLength = 80
 
+    const [user, setUser] = useState(null)
+    const [loggedIn, setLoggedIn] = useState(false)
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState(null)
     const [title, setTitle] = useState('')
     const [summary, setSummary] = useState('')
     const [content, setContent] = useState(null)
     const [file, setFile] = useState(null)
     const [category, setCategory] = useState('Category')
+
+    useEffect(() => {
+        ;(async function () {
+            try {
+                setLoading(true)
+                const response = await axios.get(`${api_url}myprofile`, {
+                    withCredentials: true,
+                    credentials: 'include'
+                })
+                setUser(response.data.userData)
+                setLoggedIn(response.data.loggedIn)
+            } catch (err) {
+                console.log(err)
+                setError(err.message)
+            } finally {
+                setLoading(false)
+            }
+        })()
+
+    }, [])
 
     const handleClick = () => {
         if(title == '' || summary == '' || content == '' || category == 'Category') {
@@ -37,6 +64,7 @@ function CreateBlog() {
 
         const postBlog = async () => {
             try {
+                setLoading(true)
                 const response = await fetch(`${api_url}posts/`, {
                     method: 'POST',
                     body: formData,
@@ -59,14 +87,21 @@ function CreateBlog() {
                 console.log(err)
                 alert('Server Error')
                 navigate('/')
+            } finally {
+                setLoading(false)
             }
         }
         postBlog()
     }
 
+    if(!user) return (
+            <LoadingScreen />
+    )
+    if(error) return (<Typography variant="h4">{error}</Typography>)
+
     return (
         <div className="create-blog">
-            <Header2 />
+            <Header2 user={user} loggedIn={loggedIn} />
             <section className="fill-blog">
                 {/* Title */}
                 <textarea className="py-3 px-4 block w-full rounded-lg text-2xl border border-black"
@@ -95,8 +130,11 @@ function CreateBlog() {
                     })}
                 </select>
 
-                <button className="btn-add-blog ssp w-full text-white text-center text-lg font-bold py-3 px-4 rounded-lg" onClick={handleClick} type="button">
-                    Publish!
+                <button className="btn-add-blog ssp w-full text-white text-center text-lg font-bold py-3 px-4 rounded-lg" 
+                    onClick={handleClick} type="button"
+                    disabled={loading}
+                >
+                    {loading ? <CircularProgress /> : 'Publish!'}
                 </button>
             </section>
         </div>
