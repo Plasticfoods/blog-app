@@ -58,7 +58,7 @@ export default function Header2({ user, loggedIn }) {
                 {loggedIn ?
                     ( 
                     <>
-                        <button onClick={logout}>Logout</button>
+                        <button onClick={logout}>logout</button>
                         <Link className='flex gap-2' to={createBlogUrl}>
                             <FontAwesomeIcon icon={faPenToSquare} className='write-icon' />
                             <p>Write</p>
