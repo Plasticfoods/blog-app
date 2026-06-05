@@ -36,6 +36,11 @@ const blogSchema = new mongoose.Schema({
     }
 })
 
+// Add indexes for pagination and filtering performance
+blogSchema.index({ uploadDate: -1 });  // For sorting by date
+blogSchema.index({ category: 1 });      // For category filtering
+blogSchema.index({ uploadDate: -1, _id: -1 });  // Compound index for efficient pagination
+
 const Blog = mongoose.model("blog", blogSchema);
 
 module.exports = Blog;

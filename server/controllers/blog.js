@@ -4,17 +4,63 @@ const User = require("../models/User");
 const defaultBlogImage = 'https://res.cloudinary.com/dq6drt1el/image/upload/v1690996889/default-blog-image_wjf0f7.jpg'
 
 
-// get all blogs
+// get all blogs with pagination, sorting, and filtering
 const getBlogs = async (req, res) => {
     try {
-        const blogDocs = await Blog.find();
-        setTimeout(() => {
-            res.status(200).json(blogDocs);
-        }, 4000);
+        // Parse query parameters
+        const page = Math.max(1, parseInt(req.query.page) || 1);         // Default: page 1
+        const limit = Math.min(50, Math.max(5, parseInt(req.query.limit) || 10));  // Clamp 5-50
+        const sortBy = ['uploadDate', 'category'].includes(req.query.sortBy) ? req.query.sortBy : 'uploadDate';
+        const order = req.query.order === 'asc' ? 1 : -1;                // Default: desc
+        const category = req.query.category ? req.query.category.trim() : null;
+
+        // Build filter query
+        const filter = {};
+        if (category && category !== 'All') {
+            filter.category = category;
+        }
+
+        // Calculate skip value
+        const skip = (page - 1) * limit;
+
+        // Execute parallel queries for efficiency
+        const [blogs, totalCount] = await Promise.all([
+            Blog.find(filter)
+                .sort({ [sortBy]: order, _id: -1 })  // Secondary sort by _id for consistency
+                .skip(skip)
+                .limit(limit)
+                .lean(),  // Use lean() for faster queries since we don't modify docs
+            Blog.countDocuments(filter)
+        ]);
+
+        // Calculate pagination metadata
+        const totalPages = Math.ceil(totalCount / limit);
+
+        // Validate page number
+        if (page > totalPages && totalCount > 0) {
+            return res.status(400).json({
+                message: 'Page out of range',
+                currentPage: page,
+                totalPages: totalPages
+            });
+        }
+
+        // Send response with pagination metadata
+        res.status(200).json({
+            blogs: blogs,
+            pagination: {
+                currentPage: page,
+                totalPages: totalPages,
+                totalCount: totalCount,
+                limit: limit,
+                hasNextPage: page < totalPages,
+                hasPrevPage: page > 1
+            }
+        });
     } 
     catch (err) {
-        console.log(err);
-        res.status(500).json({message: 'Server Error'})
+        console.error('Error fetching blogs:', err);
+        res.status(500).json({ message: 'Server Error' });
     }
 }
 
