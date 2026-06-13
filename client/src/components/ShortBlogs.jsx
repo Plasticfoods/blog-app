@@ -25,29 +25,22 @@ export default function ShortBlogs() {
     const [error, setError] = useState(null)
     const [currentPage, setCurrentPage] = useState(1)
     const [totalPages, setTotalPages] = useState(1)
-    const [selectedCategory, setSelectedCategory] = useState('All')
-    const [sortBy, setSortBy] = useState('uploadDate')
-    const [order, setOrder] = useState('desc')
 
-    const fetchBlogsData = async (page, category, sort, direction) => {
+    const fetchBlogsData = async (page) => {
         setLoading(true)
         try {
             const params = new URLSearchParams({
                 page: page,
-                limit: 10,
-                sortBy: sort,
-                order: direction,
-                category: category
+                limit: 10
             })
 
             const response = await axios.get(`${api_url}posts?${params}`)
             
-            // Handle new response structure with pagination metadata
+            // Handle pagination response structure
             if (response.data.pagination) {
                 setBlogs(response.data.blogs)
                 setTotalPages(response.data.pagination.totalPages)
             } else {
-                // Fallback for legacy API responses (if needed during transition)
                 setBlogs(response.data)
                 setTotalPages(1)
             }
@@ -69,29 +62,14 @@ export default function ShortBlogs() {
     }
 
     useEffect(() => {
-        fetchBlogsData(currentPage, selectedCategory, sortBy, order)
-    }, [currentPage, selectedCategory, sortBy, order])
+        fetchBlogsData(currentPage)
+    }, [currentPage])
 
     const handlePageChange = (newPage) => {
         if (newPage >= 1 && newPage <= totalPages) {
             setCurrentPage(newPage)
             window.scrollTo({ top: 0, behavior: 'smooth' })
         }
-    }
-
-    const handleSortChange = (newSort) => {
-        setSortBy(newSort)
-        setCurrentPage(1)
-    }
-
-    const handleOrderChange = (newOrder) => {
-        setOrder(newOrder)
-        setCurrentPage(1)
-    }
-
-    const handleCategoryChange = (category) => {
-        setSelectedCategory(category)
-        setCurrentPage(1)
     }
 
     if(loading) {
@@ -105,44 +83,9 @@ export default function ShortBlogs() {
     // return <LoadingScreen />
 
     return (
-        <section className="short-blogs-container">
-            {/* Pagination and Filter Controls */}
-            <div className="pagination-controls mb-6 flex gap-4 flex-wrap items-center">
-                {/* Category selector */}
-                <select 
-                    value={selectedCategory} 
-                    onChange={(e) => handleCategoryChange(e.target.value)}
-                    className="px-3 py-2 border rounded"
-                >
-                    <option value="All">All Categories</option>
-                    <option value="Technology">Technology</option>
-                    <option value="Travel">Travel</option>
-                    <option value="Food">Food</option>
-                    <option value="Lifestyle">Lifestyle</option>
-                    <option value="Other">Other</option>
-                </select>
-
-                {/* Sort selector */}
-                <select 
-                    value={sortBy} 
-                    onChange={(e) => handleSortChange(e.target.value)}
-                    className="px-3 py-2 border rounded"
-                >
-                    <option value="uploadDate">Sort by Date</option>
-                    <option value="category">Sort by Category</option>
-                </select>
-
-                {/* Order toggle */}
-                <button 
-                    onClick={() => handleOrderChange(order === 'desc' ? 'asc' : 'desc')}
-                    className="px-3 py-2 border rounded"
-                >
-                    {order === 'desc' ? '↓ Newest' : '↑ Oldest'}
-                </button>
-            </div>
-
+        <section className="short-blogs">
             {/* Blogs Section */}
-            <section className="short-blogs">
+            <section className="short-blogs-inner">
                 {blogs.length > 0 ? (
                     blogs.map((element, index) => (
                         <div className="short-blog" key={index} id={element._id}>

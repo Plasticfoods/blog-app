@@ -1,4 +1,5 @@
 import React from 'react';
+import '@testing-library/jest-dom';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import ShortBlogs from '../ShortBlogs';
@@ -110,76 +111,7 @@ describe('ShortBlogs Component - Pagination Tests', () => {
         });
     });
 
-    // Test 3: Category filter dropdown renders
-    test('should render category dropdown', async () => {
-        axios.get.mockResolvedValueOnce({
-            data: {
-                blogs: mockBlogs,
-                pagination: {
-                    currentPage: 1,
-                    totalPages: 10,
-                    totalCount: 100,
-                    limit: 10,
-                    hasNextPage: true,
-                    hasPrevPage: false
-                }
-            }
-        });
-
-        renderWithRouter(<ShortBlogs />);
-
-        await waitFor(() => {
-            expect(screen.getByDisplayValue('All Categories')).toBeInTheDocument();
-        });
-    });
-
-    // Test 4: Sort dropdown renders
-    test('should render sort dropdown', async () => {
-        axios.get.mockResolvedValueOnce({
-            data: {
-                blogs: mockBlogs,
-                pagination: {
-                    currentPage: 1,
-                    totalPages: 10,
-                    totalCount: 100,
-                    limit: 10,
-                    hasNextPage: true,
-                    hasPrevPage: false
-                }
-            }
-        });
-
-        renderWithRouter(<ShortBlogs />);
-
-        await waitFor(() => {
-            expect(screen.getByDisplayValue('Sort by Date')).toBeInTheDocument();
-        });
-    });
-
-    // Test 5: Order button renders
-    test('should render order toggle button', async () => {
-        axios.get.mockResolvedValueOnce({
-            data: {
-                blogs: mockBlogs,
-                pagination: {
-                    currentPage: 1,
-                    totalPages: 10,
-                    totalCount: 100,
-                    limit: 10,
-                    hasNextPage: true,
-                    hasPrevPage: false
-                }
-            }
-        });
-
-        renderWithRouter(<ShortBlogs />);
-
-        await waitFor(() => {
-            expect(screen.getByText('↓ Newest')).toBeInTheDocument();
-        });
-    });
-
-    // Test 6: Previous button disabled on page 1
+    // Test 3: Previous button disabled on page 1
     test('should disable Previous button on page 1', async () => {
         axios.get.mockResolvedValueOnce({
             data: {
@@ -203,7 +135,7 @@ describe('ShortBlogs Component - Pagination Tests', () => {
         });
     });
 
-    // Test 7: Next button disabled on last page
+    // Test 4: Next button disabled on last page
     test('should disable Next button on last page', async () => {
         axios.get.mockResolvedValueOnce({
             data: {
@@ -231,7 +163,7 @@ describe('ShortBlogs Component - Pagination Tests', () => {
         expect(pageText.textContent).toContain('Page');
     });
 
-    // Test 8: Blogs are rendered correctly
+    // Test 5: Blogs are rendered correctly
     test('should render blogs in the list', async () => {
         axios.get.mockResolvedValueOnce({
             data: {
@@ -255,7 +187,7 @@ describe('ShortBlogs Component - Pagination Tests', () => {
         });
     });
 
-    // Test 9: Empty state when no blogs
+    // Test 6: Empty state when no blogs
     test('should show "No posts to show" when blogs array is empty', async () => {
         axios.get.mockResolvedValueOnce({
             data: {
@@ -278,7 +210,7 @@ describe('ShortBlogs Component - Pagination Tests', () => {
         });
     });
 
-    // Test 10: Pagination not shown when no blogs
+    // Test 7: Pagination not shown when no blogs
     test('should not show pagination controls when no blogs', async () => {
         axios.get.mockResolvedValueOnce({
             data: {
@@ -302,7 +234,7 @@ describe('ShortBlogs Component - Pagination Tests', () => {
         });
     });
 
-    // Test 11: Error handling
+    // Test 8: Error handling
     test('should display error message on fetch failure', async () => {
         axios.get.mockRejectedValueOnce({
             response: {
@@ -319,7 +251,7 @@ describe('ShortBlogs Component - Pagination Tests', () => {
         });
     });
 
-    // Test 12: Loading state initially shown
+    // Test 9: Loading state initially shown
     test('should show loading screen while fetching', async () => {
         let resolvePromise;
         const promise = new Promise(resolve => {
