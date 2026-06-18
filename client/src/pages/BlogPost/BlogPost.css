@@ -68,3 +68,8 @@
     }
 
 }
+
+.short-blogs-inner {
+    display: grid;
+    gap: 2rem;
+}

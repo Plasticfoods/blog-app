@@ -14,14 +14,20 @@ const getBlogs = async (req, res) => {
         // Calculate skip value
         const skip = (page - 1) * limit;
 
+        // Build optional category filter (case-insensitive)
+        const filter = {};
+        if (req.query.category) {
+            filter.category = { $regex: new RegExp(`^${req.query.category}$`, 'i') };
+        }
+
         // Execute parallel queries for efficiency
         const [blogs, totalCount] = await Promise.all([
-            Blog.find()
+            Blog.find(filter)
                 .sort({ uploadDate: -1, _id: -1 })  // Hardcoded: newest first
                 .skip(skip)
                 .limit(limit)
                 .lean(),
-            Blog.countDocuments()
+            Blog.countDocuments(filter)
         ]);
 
         // Calculate pagination metadata

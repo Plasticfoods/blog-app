@@ -1,0 +1,248 @@
+/* Category Feed page — scoped styles. Hero, Tabs, and Header are in sections below marked LOCKED. */
+
+/* ─── Hero Banner ───────────────────────────────────────────── */
+.category-hero {
+    background-color: rgb(255, 192, 23); /* brand yellow — matches .header and .hero */
+    border-bottom: 1px solid black;
+    padding: 3rem 10%;
+}
+
+.category-hero-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    text-transform: capitalize;
+    margin-bottom: 0.5rem;
+    line-height: 1.15;
+}
+
+.category-hero-subtitle {
+    font-size: 1.05rem;
+    color: #333;
+}
+
+@media (max-width: 768px) {
+    .category-hero {
+        padding: 2rem 4%;
+    }
+    .category-hero-title {
+        font-size: 2.2rem;
+    }
+}
+
+
+/* ─── Horizontal Category Tab Bar ───────────────────────────── */
+.category-tabs {
+    border-bottom: 1px solid #e0e0e0;
+    background-color: #fff;
+    position: sticky;
+    /* sits just below the already-sticky Header2 (~58px tall) */
+    top: 58px;
+    z-index: 80;
+}
+
+.category-tabs-inner {
+    display: flex;
+    flex-wrap: nowrap;           /* single scrolling row on mobile */
+    overflow-x: auto;
+    gap: 0;
+    padding: 0 10%;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;       /* hide scrollbar — Firefox */
+}
+
+.category-tabs-inner::-webkit-scrollbar {
+    display: none;               /* hide scrollbar — Chrome / Safari */
+}
+
+.category-tab-item {
+    flex-shrink: 0;
+    display: inline-block;
+    padding: 0.85rem 1.1rem;
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: #6b6b6b;
+    text-decoration: none;
+    border-bottom: 2px solid transparent; /* placeholder; overridden by --active */
+    white-space: nowrap;
+    transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.category-tab-item:hover {
+    color: #000;
+}
+
+/* Active tab — solid black underline (Medium style) */
+.category-tab-item--active {
+    color: #000;
+    font-weight: 600;
+    border-bottom: 2px solid #000;
+}
+
+@media (max-width: 768px) {
+    .category-tabs-inner {
+        padding: 0 4%;
+    }
+}
+
+
+/* ─── Feed Container — reset all global <main> constraints ────── */
+.category-feed-main {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* Cancel the global <main> element styles injected by index.css at ≥ 900px.
+   index.css sets: padding-left 10%, padding-right 7%, display: grid 2.2fr 1fr.
+   We override all of that here so the feed can be truly full-width. */
+@media (min-width: 900px) {
+    .category-feed-main {
+        display: block;
+        padding-left: 0;
+        padding-right: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+}
+
+
+/* ─── Outer feed section: wide, centered ───────────────────── */
+.category-feed-section {
+    width: 90%;
+    max-width: 1200px;
+    margin: 2.5rem auto 5rem;
+}
+
+@media (max-width: 768px) {
+    .category-feed-section {
+        width: 100%;
+        padding: 1.5rem 4% 4rem;
+        margin: 0;
+    }
+}
+
+
+/* ─── Responsive card grid ──────────────────────────────── */
+
+/* Mobile: 1 column */
+.category-grid-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+/* Tablet: 2 columns (≥ 600px) */
+@media (min-width: 600px) {
+    .category-grid-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem 2.5rem;
+    }
+}
+
+/* Desktop: 3 columns (≥ 1024px) */
+@media (min-width: 1024px) {
+    .category-grid-container {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2.5rem 3rem;
+    }
+}
+
+
+/* ─── Card: vertical stack (image-top / text-below) ─────────── */
+.category-feed-main .short-blog {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    background-color: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.category-feed-main .short-blog:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.09);
+    transform: translateY(-2px);
+}
+
+
+/* ─── Card image: full-width 16:9 banner at the top ─────────── */
+.category-feed-main .short-blog-right {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    order: -1;          /* moves image above text in the flex column */
+    flex-shrink: 0;
+}
+
+.category-feed-main .short-blog-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.category-feed-main .short-blog:hover .short-blog-image {
+    transform: scale(1.03);
+}
+
+
+/* ─── Card text block: padding and typography ───────────────── */
+.category-feed-main .short-blog-left {
+    padding: 0.9rem 1rem 1rem;
+    gap: 0.35rem;
+    flex: 1;
+}
+
+.category-feed-main .short-blog-title {
+    font-size: 1.05rem;
+    line-height: 1.45;
+    font-weight: 700;
+    color: #111;
+}
+
+/* Always show summary — not hidden like on the narrow mobile home feed */
+.category-feed-main .short-blog-content {
+    display: block !important;
+    font-size: 0.85rem;
+    color: #6b6b6b;
+    line-height: 1.55;
+    margin-top: 0.15rem;
+}
+
+.category-feed-main .short-blog-details {
+    margin-top: 0.4rem;
+}
+
+
+/* ─── Pagination footer: spans all grid columns ─────────────── */
+.category-feed-main .pagination-footer {
+    grid-column: 1 / -1;
+    margin-top: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.category-feed-main .pagination-footer button {
+    padding: 0.5rem 1.25rem;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    background: #fff;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.category-feed-main .pagination-footer button:hover:not(:disabled) {
+    background: #f0f0f0;
+    border-color: #aaa;
+}
+
+.category-feed-main .pagination-footer button:disabled {
+    opacity: 0.4;
+    cursor: default;
+}

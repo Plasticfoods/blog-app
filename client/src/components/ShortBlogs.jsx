@@ -103,7 +103,7 @@ export default function ShortBlogs() {
                                 <div className="short-blog-details">
                                     <p className="date"> {extractDate(element.uploadDate)} </p>
                                     <div>.</div>
-                                    <Link className="tag-name link">{element.category}</Link>
+                                    <Link className="tag-name link" to={`/posts/tag/${element.category}`}>{element.category}</Link>
                                 </div>
                             </div>
                             {/* Blog Image */}

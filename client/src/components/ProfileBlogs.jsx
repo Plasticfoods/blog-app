@@ -64,7 +64,7 @@ export default function ProfileBlogs() {
                                     {element.title}
                                 </Link>
                                 <p className="short-blog-content">{ getShortSummary(element.summary) }</p>
-                                <Link className="short-blog-tag">{element.category}</Link>
+                                <Link className="short-blog-tag" to={`/posts/tag/${element.category}`}>{element.category}</Link>
                             </div>
                             {/* Blog Image */}
                             <picture className="short-blog-right">

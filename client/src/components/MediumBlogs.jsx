@@ -81,9 +81,6 @@ export function MediumBlog2({ blog, profile, isCurrentUser, deleteBlog }) {
         summary = blog.summary; // Assign the original summary if it is less than or equal to 70 characters
     }
 
-
-    console.log('Summary: ', blog.summary, summary)
-
     return (
         <Card className='medium-blog' sx={{ maxWidth: '400px' }}>
             <CardMedia
